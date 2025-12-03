@@ -29,6 +29,17 @@
             </li>
 
             <li>
+                <a class="{% if request.resolver_match.url_name == 'backend_list' %}active{% endif %}"
+                    href="{% url 'property:backend_list' %}" hx-get="{% url 'property:backend_list' %}"
+                    hx-target="#content" hx-push-url="true">
+                    <span>
+                        <img src="{% static 'assets/images/dashboard_icon_3.png' %}" alt="icon" class="img-fluid w-100">
+                    </span>
+                    Manage Properties
+                </a>
+            </li>
+
+            <li>
                 <a class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
                     href="{% url 'accounts:profile' %}" hx-get="{% url 'accounts:profile' %}" hx-target="#content"
                     hx-push-url="true">
@@ -39,14 +50,7 @@
                 </a>
             </li>
 
-            <li>
-                <a href="dashboard_property.html">
-                    <span>
-                        <img src="{% static 'assets/images/dashboard_icon_3.png' %}" alt="icon" class="img-fluid w-100">
-                    </span>
-                    Property
-                </a>
-            </li>
+
 
             <li>
                 <a href="dashboard_pricing.html">

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "apps.accounts",
     "apps.property",
     "apps.pages",
+    "apps.property_type",
 ]
 
 MIDDLEWARE = [

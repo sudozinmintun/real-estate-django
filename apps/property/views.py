@@ -12,3 +12,5 @@ def property_list_htmx(request):
 
     context = {"properties": properties}
     return render(request, "property/partials/property_list.html", context)
+
+

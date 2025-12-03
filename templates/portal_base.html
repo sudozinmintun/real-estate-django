@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,60 +6,16 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
     <title>{% block title %}{% endblock %} - Real Estate</title>
-    <link rel="stylesheet" href="{% static 'assets/css/all.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/select2.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/animated_barfiller.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/summernote.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/scroll_button.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/utilities.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/jquery.simple-bar-graph.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    {% include 'shared/share_css.html' %}
 </head>
 
 <body id="content" hx-boost="true">
-
     <section class="dashboard">
         {% include 'includes/portal_menu.html' %}
         {% block contents %}{% endblock %}
     </section>
-
-    <!--jquery library js-->
-    <script src="{% static 'assets/js/jquery-3.7.1.min.js' %}"></script>
-    <!--bootstrap js-->
-    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
-    <!--font-awesome js-->
-    <script src="{% static 'assets/js/Font-Awesome.js' %}"></script>
-    <!--nice-select js-->
-    <script src="{% static 'assets/js/jquery.nice-select.min.js' %}"></script>
-    <!--select-2 js-->
-    <script src="{% static 'assets/js/select2.min.js' %}"></script>
-    <!--slick js-->
-    <script src="{% static 'assets/js/slick.min.js' %}"></script>
-    <!--marquee js-->
-    <script src="{% static 'assets/js/jquery.marquee.min.js' %}"></script>
-    <!--YTPlayer js-->
-    <script src="{% static 'assets/js/jquery.youtube-background.min.js' %}"></script>
-    <!--wow js-->
-    <script src="{% static 'assets/js/wow.min.js' %}"></script>
-    <!--animated barfiller js-->
-    <script src="{% static 'assets/js/animated_barfiller.js' %}"></script>
-    <!--simple-bar-graph js-->
-    <script src="{% static 'assets/js/jquery.simple-bar-graph.min.js' %}"></script>
-    <!--sticky sidebar js-->
-    <script src="{% static 'assets/js/sticky_sidebar.js' %}"></script>
-    <!--summernote js-->
-    <script src="{% static 'assets/js/summernote.min.js' %}"></script>
-    <!--scroll button js-->
-    <script src="{% static 'assets/js/scroll_button.js' %}"></script>
-    <!--main/custom js-->
-    <script src="{% static 'assets/js/script.js' %}"></script>
+    {% include 'shared/share_js.html' %}
 </body>
+{% include "messages.html" %}
 
 </html>

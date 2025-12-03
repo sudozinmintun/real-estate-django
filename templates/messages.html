@@ -1,12 +1,14 @@
 {% if messages %}
-<div class="messages mb-3">
+<script>
     {% for message in messages %}
-    <div class="alert 
-            {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show"
-        role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    Toastify({
+        text: "{{ message|escapejs }}",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        className: "{{ message.tags }}",
+        stopOnFocus: true,
+    }).showToast();
     {% endfor %}
-</div>
+</script>
 {% endif %}

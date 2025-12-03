@@ -60,7 +60,11 @@ def profile(request):
     return render(
         request,
         "accounts/profile.html",
-        {"p_form": p_form, "u_form": u_form, "change_password_form": change_password_form},
+        {
+            "p_form": p_form,
+            "u_form": u_form,
+            "change_password_form": change_password_form,
+        },
     )
 
 
@@ -74,7 +78,7 @@ def change_password(request):
             messages.success(request, "Password updated successfully.")
             return redirect("accounts:profile")
         else:
-            messages.error(request, "Please correct the errors below.")
+            messages.error(request, "Unable to update your password. Please try again.")
             return redirect("accounts:profile")
 
 
