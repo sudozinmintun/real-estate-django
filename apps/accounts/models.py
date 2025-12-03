@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from apps.order.models import Order
+from apps.country.models import Country
+from apps.city.models import City
 
 
 class Profile(models.Model):
@@ -14,7 +16,26 @@ class Profile(models.Model):
     user_type = models.CharField(
         max_length=10, choices=MEMBER_TYPE_CHOICES, default="MEMBER"
     )
+    country = models.ForeignKey(
+        Country,
+        on_delete=models.SET_NULL,
+        related_name="profiles_country",
+        null=True,
+        blank=True,
+    )
+    city = models.ForeignKey(
+        City,
+        on_delete=models.SET_NULL,
+        related_name="profiles_city",
+        null=True,
+        blank=True,
+    )
     address = models.TextField(blank=True, null=True)
+    photo = models.ImageField(upload_to="profile_photos/", blank=True, null=True)
+    facebook = models.TextField(blank=True, null=True)
+    linkedin = models.TextField(blank=True, null=True)
+    x = models.TextField(blank=True, null=True)
+    website = models.TextField(blank=True, null=True)
 
     def total_max_properties(self):
         return Order.total_max_properties(self.user)

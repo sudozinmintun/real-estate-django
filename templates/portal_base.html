@@ -26,11 +26,10 @@
 
 <body id="content" hx-boost="true">
 
-    {% include 'includes/menu.html' %}
-
-    {% block contents %}{% endblock %}
-
-    {% include 'includes/footer.html' %}
+    <section class="dashboard">
+        {% include 'includes/portal_menu.html' %}
+        {% block contents %}{% endblock %}
+    </section>
 
     <!--jquery library js-->
     <script src="{% static 'assets/js/jquery-3.7.1.min.js' %}"></script>

@@ -52,16 +52,27 @@
 
             <ul class="menu_right d-flex align-items-center">
                 <li>
-                    <a class="user_icon" href="dashboard.html">
-                        <span> <img src="{% static 'assets/images/user_icon_3.png' %}" alt="user"
-                                class="img-fluid w-100">
+                    {% if user.is_authenticated %}
+                    <a class="user_icon" href="{% url 'accounts:dashboard' %}">
+                        <span>
+                            <img src="{% static 'assets/images/user_icon_3.png' %}" alt="user" class="img-fluid w-100">
                         </span>
                         Profile
                     </a>
+                    {% else %}
+                    <a class="user_icon" href="{% url 'accounts:login' %}">
+                        <span>
+                            <img src="{% static 'assets/images/user_icon_3.png' %}" alt="user" class="img-fluid w-100">
+                        </span>
+                        Login
+                    </a>
+                    {% endif %}
                 </li>
 
                 <li class="manu_btn">
-                    <a class="common_btn" href="dashboard_add_property.html">Add Listing</a>
+                    <a class="common_btn" href="dashboard_add_property.html">
+                        Add Listing
+                    </a>
                 </li>
 
                 <li>
