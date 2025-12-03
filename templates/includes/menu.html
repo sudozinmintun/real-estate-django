@@ -1,0 +1,78 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg main_menu">
+    <div class="container container_large">
+        <a class="navbar-brand" href="{% url 'pages:home' %}" hx-get="{% url 'pages:home' %}" hx-target="#content"
+            hx-push-url="true">
+            <img src="{% static 'assets/images/logo_2.png' %}" alt="MaxLand" class="img-fluid">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars bar_icon"></i>
+            <i class="far fa-times close_icon"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav m-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'pages:home' %}" hx-get="{% url 'pages:home' %}"
+                        hx-target="#content" hx-push-url="true">
+                        Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'property:properties' %}" hx-get="{% url 'property:properties' %}"
+                        hx-target="#content" hx-push-url="true">
+                        Properties
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'pages:home' %}" hx-get="{% url 'pages:home' %}"
+                        hx-target="#content" hx-push-url="true">
+                        Request Porperty
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'pages:home' %}" hx-get="{% url 'pages:home' %}"
+                        hx-target="#content" hx-push-url="true">
+                        Agencies
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'pages:contact' %}" hx-get="{% url 'pages:contact' %}"
+                        hx-target="#content" hx-push-url="true">
+                        Contact
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="menu_right d-flex align-items-center">
+                <li>
+                    <a class="user_icon" href="dashboard.html">
+                        <span> <img src="{% static 'assets/images/user_icon_3.png' %}" alt="user"
+                                class="img-fluid w-100">
+                        </span>
+                        Profile
+                    </a>
+                </li>
+
+                <li class="manu_btn">
+                    <a class="common_btn" href="dashboard_add_property.html">Add Listing</a>
+                </li>
+
+                <li>
+                    <div class="toggol_bar" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                        aria-controls="offcanvasRight">
+                        <span class="toggol_bar_1"></span>
+                        <span class="toggol_bar_2"></span>
+                        <span class="toggol_bar_1"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
