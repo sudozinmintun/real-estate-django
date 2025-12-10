@@ -1,5 +1,5 @@
 {% extends 'portal_base.html' %}
-{% block title %}Dashboard{% endblock %}
+{% block title %}Manage Properties{% endblock %}
 {% block contents %}
 <div class="dashboard_content">
     <h2 class="dashboard_title">
@@ -10,6 +10,10 @@
         </a>
     </h2>
 
+    <input type="text" name="q" id="search" placeholder="Search properties..." class="form-control mb-3"
+        hx-get="{% url 'property:backend_htmx_list' %}" hx-target="#property-table-body"
+        hx-trigger="keyup changed delay:500ms" autocomplete="off" />
+
     <div class="overview_listing wow fadeInUp" data-wow-duration="1.5s">
         <div class="table-responsive">
             <table>
@@ -17,45 +21,67 @@
                     <tr>
                         <th class="images">images</th>
                         <th class="details">details</th>
-                        <th class="price">price</th>
+                        <th class="status">type/area</th>
+                        <th class="status">Country/City</th>
+                        <th class="status">price</th>
                         <th class="status">Purpose</th>
                         <th class="action">action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td class="images">
-                            <img src="assets/images/property_1.jpg" alt="property" class="img-fluid w-100">
-                        </td>
-                        <td class="details">
-                            <a class="item_title" href="property_details.html">Leisure Beautiful
-                                Health</a>
-                            <p>Posting date: March 22, 2024</p>
-                            <span>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <b>(24 Reviews)</b>
-                            </span>
-                        </td>
-                        <td class="price">
-                            <h3>$599.00</h3>
-                        </td>
-                        <td class="status">
-                            <span class="sold">sale</span>
-                        </td>
-                        <td class="action">
-                            <a href="dashboard_edit_property.html"><i class="far fa-pen"></i> Edit</a>
-                            <a href="#"><i class="far fa-trash"></i> Delete</a>
-                        </td>
-                    </tr>
+                <tbody id="property-table-body" hx-get="{% url 'property:backend_htmx_list' %}" hx-trigger="load"
+                    hx-swap="innerHTML">
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
 
+<style>
+    .property-table td {
+        vertical-align: middle;
+        padding: 12px 10px;
+    }
+
+    .property-title {
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .property-icons i {
+        margin-right: 4px;
+        color: #6c757d;
+    }
+
+    .price {
+        font-weight: 700;
+        color: #0d6efd;
+    }
+
+    .badge-purpose {
+        padding: 4px 8px;
+        font-size: 12px;
+        border-radius: 6px;
+    }
+
+    .badge-sale {
+        background: #e7f1ff;
+        color: #0d6efd;
+    }
+
+    .badge-rent {
+        background: #fff4e5;
+        color: #ff9800;
+    }
+
+    .action a {
+        display: inline-block;
+        margin-right: 10px;
+        font-size: 14px;
+        color: #0d6efd;
+    }
+
+    .action a.delete {
+        color: #dc3545;
+    }
+</style>
 {% endblock %}

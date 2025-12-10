@@ -1,0 +1,83 @@
+{% for property in properties %}
+<tr id="property-{{ property.id }}" class="property-table">
+
+    <td width="80">
+        {% if property.image %}
+        <img src="{{ property.image.url }}" class="img-fluid rounded"
+            style="width:80px; height:60px; object-fit:cover;">
+        {% else %}
+        <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width:80px; height:60px;">
+            <i class="far fa-image text-muted"></i>
+        </div>
+        {% endif %}
+        <a href="{% url 'property:backend_photo_upload' property.id %}" hx-boost="false">
+            <i class="far fa-pen"></i>
+            Upload
+        </a>
+    </td>
+
+    <td>
+        <div class="property-title">
+            {{ property.title|truncatechars:30 }}
+        </div>
+
+        <div class="property-icons small text-muted mt-1">
+            <i class="far fa-bed"></i>
+            {{ property.bedroom|default_if_none:"0" }}
+            &nbsp; &nbsp;
+            <i class="far fa-bath"></i>
+            {{ property.bathroom|default_if_none:"0" }}
+        </div>
+    </td>
+
+    <td>
+        <strong>{{ property.property_type.name }}</strong>
+        <br>
+        <span class="text-muted small">
+            {{ property.area }} {{ property.area_unit }}
+        </span>
+    </td>
+
+    <td>
+        {{ property.country.name }}
+        <br>
+        <span class="text-muted small">
+            {{ property.city.name }}
+            {{ property.township.name }}
+        </span>
+    </td>
+
+    <td class="price">
+        {{ property.price }}
+        {{ property.currency.code }}
+    </td>
+
+    <td class="status">
+        {% if property.purpose == "sell" %}
+        <span class="badge-purpose badge-sale">For Sale</span>
+        {% else %}
+        <span class="badge-purpose badge-rent">For Rent</span>
+        {% endif %}
+    </td>
+
+    <td class="action">
+        <a href="{% url 'property:backend_edit' property.id %}" hx-boost="false">
+            <i class="far fa-pen"></i>
+            Edit
+        </a>
+
+        <a class="delete" hx-post="{% url 'property:backend_delete' property.id %}"
+            hx-target="#property-{{ property.id }}" hx-swap="outerHTML"
+            hx-confirm="Are you sure you want to delete this property?">
+            <i class="far fa-trash"></i>
+            Delete
+        </a>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="7" class="text-center text-muted py-4">
+        No properties found.
+    </td>
+</tr>
+{% endfor %}

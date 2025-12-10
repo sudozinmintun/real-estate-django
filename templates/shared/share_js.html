@@ -15,7 +15,7 @@
 <!--marquee js-->
 <script src="{% static 'assets/js/jquery.marquee.min.js' %}"></script>
 <!--YTPlayer js-->
-<script src="{% static 'assets/js/jquery.youtube-background.min.js' %}"></script>
+<!-- <script src="{% static 'assets/js/jquery.youtube-background.min.js' %}"></script> -->
 <!--wow js-->
 <script src="{% static 'assets/js/wow.min.js' %}"></script>
 <!--animated barfiller js-->
@@ -27,8 +27,31 @@
 <!--summernote js-->
 <script src="{% static 'assets/js/summernote.min.js' %}"></script>
 <!--scroll button js-->
-<script src="{% static 'assets/js/scroll_button.js' %}"></script>
+<!-- <script src="{% static 'assets/js/scroll_button.js' %}"></script> -->
 <!--main/custom js-->
-<script src="{% static 'assets/js/script.js' %}"></script>
+<script src="{% static 'assets/js/appscript.js' %}"></script>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script>
+    $("#id_country").on("change", function () {
+        let countryId = $(this).val();
+
+        fetch('/get-cities/?country=' + countryId)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                $("#id_city").html(data.html);
+                $("#id_township").html('<option value="">Select Township</option>');
+            });
+    });
+
+    $("#id_city").on("change", function () {
+        let cityId = $(this).val();
+        fetch('/get-townships/?city=' + cityId)
+            .then(response => response.json())
+            .then(data => {
+                $("#id_township").html(data.html);
+            });
+    });
+</script>
