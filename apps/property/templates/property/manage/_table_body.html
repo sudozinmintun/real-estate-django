@@ -2,19 +2,20 @@
 <tr id="property-{{ property.id }}" class="property-table">
 
     <td width="80">
-        {% if property.image %}
-        <img src="{{ property.image.url }}" class="img-fluid rounded"
+        {% if property.photos.first %}
+        <img src="{{ property.photos.first.image.url }}" class="img-fluid rounded"
             style="width:80px; height:60px; object-fit:cover;">
         {% else %}
         <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width:80px; height:60px;">
             <i class="far fa-image text-muted"></i>
         </div>
         {% endif %}
-        <a href="{% url 'property:backend_photo_upload' property.id %}" hx-boost="false">
-            <i class="far fa-pen"></i>
-            Upload
+
+        <a href="{% url 'property:backend_photo_upload' property.id %}" hx-boost="false" class="d-block mt-1 small">
+            <i class="far fa-upload"></i> Upload
         </a>
     </td>
+
 
     <td>
         <div class="property-title">

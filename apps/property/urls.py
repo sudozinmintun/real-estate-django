@@ -36,4 +36,5 @@ urlpatterns += [
         property_manage.photo_upload,
         name="backend_photo_upload",
     ),
+    path("photo/delete/<int:id>/", property_manage.photo_delete, name="photo_delete"),
 ]
