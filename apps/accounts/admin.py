@@ -3,6 +3,7 @@ from .models import Profile
 from apps.property.models import Property
 from apps.order.models import Order
 
+
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = (
@@ -14,7 +15,6 @@ class ProfileAdmin(admin.ModelAdmin):
         "remaining_properties",
     )
     search_fields = ("user__username", "user__email", "phone")
-    list_filter = ("user_type",)
     readonly_fields = (
         "total_max_properties_display",
         "posted_properties_count",

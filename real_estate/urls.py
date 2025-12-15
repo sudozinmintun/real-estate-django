@@ -26,6 +26,8 @@ urlpatterns = [
     path("", include("apps.property.urls")),
     path("", include("apps.accounts.urls")),
     path("", include("apps.city.urls")),
+    path("", include("apps.package.urls")),
+    path("", include("apps.order.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # if settings.DEBUG:

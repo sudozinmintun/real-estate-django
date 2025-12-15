@@ -50,16 +50,17 @@
                 </a>
             </li>
 
-
-
             <li>
-                <a href="dashboard_pricing.html">
+                <a class="{% if request.resolver_match.url_name == 'pricing_plan' %}active{% endif %}"
+                    href="{% url 'package:pricing_plan' %}" hx-get="{% url 'package:pricing_plan' %}" hx-target="#content"
+                    hx-push-url="true">
                     <span>
                         <img src="{% static 'assets/images/dashboard_icon_4.png' %}" alt="icon" class="img-fluid w-100">
                     </span>
                     Pricing Plan
                 </a>
             </li>
+
 
             <li>
                 <a href="dashboard_order.html">

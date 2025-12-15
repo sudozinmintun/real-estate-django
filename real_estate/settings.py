@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "apps.pages",
     "apps.property_type",
     "apps.amenities",
+    "apps.payment",
 ]
 
 MIDDLEWARE = [

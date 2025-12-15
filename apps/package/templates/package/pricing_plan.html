@@ -1,0 +1,233 @@
+{% extends 'portal_base.html' %}
+{% block title %}Pricing Plan{% endblock %}
+{% block contents %}
+
+<div class="dashboard_content">
+    <h2 class="dashboard_title">pricing plan</h2>
+    <div class="dashboard_pricing">
+        <div class="row">
+            {% for package in packages %}
+            <div class="col-xxl-4 col-md-6 wow fadeInUp" data-wow-duration="1.5s">
+                <div class="single_pricing">
+                    <h5>{{ package.name }}</h5>
+                    <p>
+                        {{ package.name }} listing submission,
+                        active for {{ package.duration_months }} month{{ package.duration_months|pluralize }}
+                    </p>
+
+                    <h2>
+                        {% if package.price == 0 %}
+                        Free
+                        {% else %}
+                        {{ package.price|floatformat:0 }} MMK
+                        {% endif %}
+                    </h2>
+
+                    <ul>
+                        <li>All Operating Supported</li>
+                        <li>
+                            {% if package.max_properties == 0 %}
+                            Unlimited Property Listings
+                            {% else %}
+                            {{ package.max_properties }} Property Listings
+                            {% endif %}
+                        </li>
+
+                        <li>
+                            {{ package.duration_months }} Month{{ package.duration_months|pluralize }} Availability
+                        </li>
+
+                        <li>Feature Properties</li>
+                        <li>24/7 Full support</li>
+                    </ul>
+                    <br>
+                    <button class="common_btn w-100 open-order" data-id="{{ package.id }}"
+                        data-name="{{ package.name }}" data-price="{{ package.price }}" data-bs-toggle="offcanvas"
+                        data-bs-target="#orderOffcanvas">
+                        Choose This Pack
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="orderOffcanvas">
+    <div class="offcanvas-header border-bottom">
+        <div>
+            <h5 class="mb-0" id="offcanvasPackageName"></h5>
+            <small class="text-muted">
+                Price: <span id="offcanvasPrice"></span> MMK
+            </small>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+
+    <div class="offcanvas-body">
+        <form method="post" enctype="multipart/form-data" action="{% url 'package:create_order' %}">
+            {% csrf_token %}
+
+            <!-- hidden package -->
+            <input type="hidden" name="package_id" id="offcanvasPackageId">
+            <input type="hidden" name="payment" id="selectedPayment">
+
+            <!-- PAYMENT METHODS -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Payment Method
+                </label>
+
+                <div class="payment-grid">
+                    {% for p in payments %}
+                    <div class="payment-card" data-id="{{ p.id }}">
+
+                        <div class="bank-name">
+                            {{ p.bank_name }}
+                        </div>
+
+                        <div class="account-name">
+                            {{ p.account_name }}
+                        </div>
+
+                        <div class="account-row">
+                            <span class="account-number">
+                                {{ p.account_number }}
+                            </span>
+
+                            <button type="button" class="copy-btn" data-copy="{{ p.account_number }}">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- SCREENSHOT -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Payment Screenshot
+                </label>
+                <input type="file" name="screenshot" class="form-control" required>
+            </div>
+
+            <button class="btn btn-success w-100 py-2 fw-semibold">
+                Confirm Order
+            </button>
+
+        </form>
+    </div>
+</div>
+
+<style>
+    .payment-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    @media (max-width: 576px) {
+        .payment-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .payment-card {
+        padding: 10px 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        background: #ffffff;
+    }
+
+    /* BANK NAME */
+    .bank-name {
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+
+    /* ACCOUNT HOLDER */
+    .account-name {
+        font-size: 12px;
+        color: #6b7280;
+        margin-bottom: 4px;
+    }
+
+    /* ACCOUNT NUMBER ROW */
+    .account-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .account-number {
+        font-family: monospace;
+        font-size: 12px;
+    }
+
+    /* COPY BUTTON */
+    .copy-btn {
+        font-size: 11px;
+        padding: 3px 8px;
+        border-radius: 6px;
+        border: 1px solid #2563eb;
+        background: transparent;
+        color: #2563eb;
+    }
+
+    .copy-btn:hover {
+        background: #2563eb;
+        color: #ffffff;
+    }
+
+    .payment-card {
+        padding: 10px 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        background: #ffffff;
+        cursor: pointer;
+    }
+
+    .payment-card.active {
+        border-color: #16a34a;
+        background: #f0fdf4;
+    }
+</style>
+
+<script>
+    document.querySelectorAll(".open-order").forEach(btn => {
+        btn.addEventListener("click", function () {
+            document.getElementById("offcanvasPackageId").value = this.dataset.id;
+            document.getElementById("offcanvasPackageName").textContent = this.dataset.name;
+            document.getElementById("offcanvasPrice").textContent = this.dataset.price;
+        });
+    });
+
+    /* Select Payment Card */
+    document.querySelectorAll(".payment-card").forEach(card => {
+        card.addEventListener("click", function () {
+            document.querySelectorAll(".payment-card")
+                .forEach(c => c.classList.remove("active"));
+
+            this.classList.add("active");
+            document.getElementById("selectedPayment").value = this.dataset.id;
+        });
+    });
+
+    /* Copy Account Number */
+    document.querySelectorAll(".copy-btn").forEach(btn => {
+        btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+
+            navigator.clipboard.writeText(this.dataset.copy);
+
+            const old = this.textContent;
+            this.textContent = "Copied ✓";
+
+            setTimeout(() => this.textContent = old, 1200);
+        });
+    });
+</script>
+
+{% endblock %}
