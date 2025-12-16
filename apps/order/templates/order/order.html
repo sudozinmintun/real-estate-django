@@ -1,0 +1,72 @@
+{% extends 'portal_base.html' %}
+{% block title %}Order{% endblock %}
+{% block contents %}
+{% load humanize %}
+
+<div class="dashboard_content">
+    <h2 class="dashboard_title">dashboard order</h2>
+    <div class="dashboard_order wow fadeInUp" data-wow-duration="1.5s">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="serial text-center">Order ID</th>
+                                <th class="package text-center">Package Name</th>
+                                <th class="date text-center">Purchase Date</th>
+                                <th class="date text-center">Status</th>
+                                <th class="date text-center">Approval Date</th>
+                                <th class="date text-center">Expiration Date</th>
+                                <th class="price text-center">Price</th>
+                                <th class="serial text-center">
+                                    Listings
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td class="serial text-center">
+                                    {{ order.order_id }}
+                                </td>
+                                <td class="package text-center">
+                                    {{ order.package.name }}
+                                </td>
+                                <td class="date text-center">
+                                    {{ order.created_at|date:"Y-m-d" }}
+                                </td>
+                                <td class="date text-center">
+                                    {% if order.status == "PENDING" %}
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                    {% elif order.status == "APPROVED" %}
+                                    <span class="badge bg-success">Approved</span>
+                                    {% elif order.status == "REJECTED" %}
+                                    <span class="badge bg-danger">Rejected</span>
+                                    {% else %}
+                                    <span class="badge bg-secondary">{{ order.status }}</span>
+                                    {% endif %}
+                                </td>
+                                <td class="date text-center">
+                                    {{ order.start_date|date:"Y-m-d" }}
+                                </td>
+                                <td class="date text-center">
+                                    {{ order.end_date|date:"Y-m-d" }}
+                                </td>
+                                <td class="price" style="text-align: right;">
+                                    {{ order.amount|intcomma }} MMK
+                                </td>
+                                <td class="price" style="text-align: right;">
+                                    {{ order.package_max_properties }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

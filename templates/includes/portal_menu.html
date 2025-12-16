@@ -52,8 +52,8 @@
 
             <li>
                 <a class="{% if request.resolver_match.url_name == 'pricing_plan' %}active{% endif %}"
-                    href="{% url 'package:pricing_plan' %}" hx-get="{% url 'package:pricing_plan' %}" hx-target="#content"
-                    hx-push-url="true">
+                    href="{% url 'package:pricing_plan' %}" hx-get="{% url 'package:pricing_plan' %}"
+                    hx-target="#content" hx-push-url="true">
                     <span>
                         <img src="{% static 'assets/images/dashboard_icon_4.png' %}" alt="icon" class="img-fluid w-100">
                     </span>
@@ -63,7 +63,9 @@
 
 
             <li>
-                <a href="dashboard_order.html">
+                <a class="{% if request.resolver_match.url_name == 'order' %}active{% endif %}"
+                    href="{% url 'order:order' %}" hx-get="{% url 'order:order' %}"
+                    hx-target="#content" hx-push-url="true">
                     <span>
                         <img src="{% static 'assets/images/dashboard_icon_7.png' %}" alt="icon" class="img-fluid w-100">
                     </span>

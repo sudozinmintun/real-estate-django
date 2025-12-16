@@ -18,7 +18,7 @@ def pricing_plan(request):
 
 
 @login_required(login_url="accounts:login")
-def create_order(request):
+def confirm_order(request):
     if request.method != "POST":
         return redirect("package:pricing_plan")
 
