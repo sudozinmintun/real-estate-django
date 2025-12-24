@@ -1,0 +1,26 @@
+Property ID = system
+Property ID = they are own id [facebook, etc]
+
+Advertiser need to change
+[
+    Agent (Re sale or rent for other own)
+    Own (mean this apartment is your apartment)
+]
+
+
+
+
+==========
+Feature
+- property lists 
+- Payment system 
+    [
+        Down payment - 20 %
+        6 Months Installment - 30%
+        Bank Loan - 50%
+    ]
+- Lowyer
+- contract
+- bank system 
+- Client (Buyer lists)
+- can share feature 2 days or 7 days or no limit

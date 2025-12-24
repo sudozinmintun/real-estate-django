@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block contents %}
+
+<style>
+    .main {
+        padding: 0px;
+    }
+</style>
+<div class="container-fluid bg-light">
+    <div class="row min-vh-100 align-items-center justify-content-center p-3">
+        <div class="col-12 col-xl-10">
+
+            <div class="card shadow-lg border-0 overflow-hidden">
+                <div class="row g-0">
+
+                    <div class="col-lg-4 bg-primary text-white p-4 p-md-5 d-flex flex-column justify-content-center">
+                        <div class="mb-4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1200px-Google_%22G%22_logo.svg.png"
+                                width="40" alt="Logo" class="bg-white rounded-circle p-1">
+                        </div>
+
+                        <h2 class="fw-bold">
+                            Welcome aboard.
+                        </h2>
+
+                        <p class="opacity-75">
+                            Set up your organization and admin profile in one step.
+                        </p>
+
+                        <div class="mt-auto pt-5">
+                            <small class="opacity-50">
+                                Already registered?
+                            </small>
+                            <br>
+                            <a href="{% url 'accounts:login' %}" class="text-white fw-semibold text-decoration-none">
+                                Sign in to your account
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 bg-white p-4 p-md-5">
+
+                        <form hx-post="{% url 'accounts:register' %}" hx-target="#content" hx-select="#content"
+                            hx-swap="innerHTML" autocomplete="off" novalidate>
+                            {% csrf_token %}
+                            <h4 class="fw-bold mb-4">
+                                Create account
+                            </h4>
+
+                            <div class="row g-4">
+
+                                <!-- COMPANY -->
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="badge bg-primary-subtle text-primary me-2">1</span>
+                                        <h6 class="mb-0 fw-bold">Company Information</h6>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ company_form.name }}
+                                        <label>Company name</label>
+                                        {% if company_form.name.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {{ company_form.name.errors|striptags }}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ company_form.address }}
+                                        <label>Address / Location</label>
+                                        <div class="text-danger small mt-1">
+                                            {{ company_form.address.errors|striptags }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <hr class="opacity-25">
+                                </div>
+
+                                <!-- ADMIN -->
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="badge bg-primary-subtle text-primary me-2">2</span>
+                                        <h6 class="mb-0 fw-bold">Admin Account</h6>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        {{ user_form.full_name }}
+                                        <label>Full name</label>
+                                        <div class="text-danger small mt-1">
+                                            {{ user_form.full_name.errors|striptags }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        {{ user_form.email }}
+                                        <label>Email address</label>
+                                        {% if user_form.email.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {% for error in user_form.email.errors %}
+                                            {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        {{ user_form.password }}
+                                        <label>Password</label>
+                                        <div class="text-danger small mt-1">
+                                            {{ user_form.password.errors|striptags }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-4">
+                                    <button class="btn btn-primary px-5 py-2 fw-bold">
+                                        Complete Registration
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

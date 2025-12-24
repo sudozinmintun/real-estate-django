@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Property Listing{% endblock %}
+{% block contents %}
+{% load static %}
+
+
+<section class="breadcrumbs" style="background: url('../assets/images/breadcrumbs_bg.jpg');">
+    <div class="breadcrumbs_overly">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 justify-content-center">
+                    <div class="breadcrumb_text wow fadeInUp" data-wow-duration="1.5s">
+                        <h1>
+                            Property Listing
+                        </h1>
+                        <ul class=" d-flex flex-wrap justify-content-center">
+                            <li>
+                                <a href="{% url 'pages:home' %}" hx-get="{% url 'pages:home' %}" hx-target="#content"
+                                    hx-push-url="true">
+                                    <i class="fas fa-home"></i>
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'property:properties' type %}"
+                                    hx-get="{% url 'property:properties' type %}" hx-target="#content"
+                                    hx-push-url="true">
+                                    Properties
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="property_grid_view pb_120 xs_pb_100">
+    <div class="container">
+        <div class="row justify-content-center wow fadeInUp" data-wow-duration="1.5s">
+            {% include 'property/partials/property_filter.html' %}
+        </div>
+
+        <div id="property-list" hx-get="{% url 'property:property_list_htmx' type %}" hx-trigger="load"
+            hx-swap="innerHTML">
+        </div>
+    </div>
+</section>
+
+{% endblock %}

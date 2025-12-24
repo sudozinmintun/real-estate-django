@@ -1,0 +1,56 @@
+{% extends 'portal_base.html' %}
+{% block title %}Pricing Plan{% endblock %}
+{% block contents %}
+
+<div class="dashboard_content">
+    <h2 class="dashboard_title">pricing plan</h2>
+    <div class="dashboard_pricing">
+        <div class="row">
+            {% for package in packages %}
+            <div class="col-xxl-4 col-md-6 wow fadeInUp" data-wow-duration="1.5s">
+                <div class="single_pricing">
+                    <h5>{{ package.name }}</h5>
+                    <p>
+                        {{ package.name }} listing submission,
+                        active for {{ package.duration_months }} month{{ package.duration_months|pluralize }}
+                    </p>
+
+                    <h2>
+                        {% if package.price == 0 %}
+                        Free
+                        {% else %}
+                        {{ package.price|floatformat:0 }} MMK
+                        {% endif %}
+                    </h2>
+
+                    <ul>
+                        <li>All Operating Supported</li>
+                        <li>
+                            {% if package.max_properties == 0 %}
+                            Unlimited Property Listings
+                            {% else %}
+                            {{ package.max_properties }} Property Listings
+                            {% endif %}
+                        </li>
+
+                        <li>
+                            {{ package.duration_months }} Month{{ package.duration_months|pluralize }} Availability
+                        </li>
+
+                        <li>Feature Properties</li>
+                        <li>24/7 Full support</li>
+                    </ul>
+                    <br>
+                    <button class="common_btn w-100 open-order" data-id="{{ package.id }}"
+                        data-name="{{ package.name }}" data-price="{{ package.price }}" data-bs-toggle="offcanvas"
+                        data-bs-target="#orderOffcanvas">
+                        Choose This Pack
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% include 'package/order_form.html' %}
+{% endblock %}

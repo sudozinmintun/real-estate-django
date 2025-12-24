@@ -1,0 +1,101 @@
+{% load static %}
+
+<div class="row mt_95 xs_mt_75">
+    {% for property in properties %}
+    <div class="col-xl-4 col-md-6 wow fadeInUp" data-wow-duration="1.5s">
+        <div class=" single_property">
+            <div class="single_property_img">
+                {% if property.photos.first %}
+                <img src="{{ property.photos.first.image.url }}" class="img-fluid w-100 rounded">
+                {% else %}
+                <img src="https://t3.ftcdn.net/jpg/06/71/33/46/360_F_671334604_ZBV26w9fERX8FCLUyDrCrLrZG6bq7h0Q.jpg">
+                {% endif %}
+                <a class="feature_link" href="#">
+                    {% if property.purpose == "sell" %}
+                    For Sale
+                    {% else %}
+                    For Rent
+                    {% endif %}
+                </a>
+                <a class="feature_link feature" href="#">
+                    {{ property.property_id }}
+                </a>
+                <ul class="d-flex flex-wrap">
+                    <li><a href="#"><i class="fas fa-share-alt"></i></a></li>
+                    <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                    <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                </ul>
+            </div>
+
+            <div class="single_property_text">
+                <div class="single_property_top">
+                    <a class="item_title" href="property_details.html" style="font-size: 15px;">
+                        {{ property.title }}
+                    </a>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i>
+                        {{ property.country.name }} |
+                        {{ property.city.name }}
+                        {% if property.township.name %}
+                        | {{ property.township.name }}
+                        {% endif %}
+                    </p>
+
+                    <ul class="d-flex justify-content-between" style="margin-top: 19px;">
+                        <li>
+                            <span>
+                                <img src="{% static 'assets/images/bad.png' %}" alt="img" class="img-fluid w-100">
+                            </span>
+                            {{ property.bedroom|default_if_none:"0" }} Beds
+                        </li>
+
+                        <li>
+                            {{ property.property_type.name }}
+                            <span>
+                                <img src="{% static 'assets/images/about_2_icon_2.png' %}" alt="img"
+                                    class="img-fluid w-100">
+                            </span>
+                        </li>
+                    </ul>
+
+                    <ul class="d-flex justify-content-between" style="margin-top: 12px;">
+                        <li>
+                            <span>
+                                <img src="{% static 'assets/images/bathtab.png' %}" alt="img" class="img-fluid w-100">
+                            </span>
+                            {{ property.bathroom|default_if_none:"0" }} Baths
+                        </li>
+                        <li>
+                            {{ property.area }} {{ property.area_unit }}
+                            <span>
+                                <img src="{% static 'assets/images/squre.png' %}" alt="img" class="img-fluid w-100">
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="single_property_bottom d-flex flex-wrap justify-content-between">
+                    <p class="align-items-center gap-2">
+                        <span class="fa-stack fa-sm">
+                            <i class="fas fa-circle fa-stack-2x"></i>
+                            <i class="fas fa-user fa-stack-1x fa-inverse"></i>
+                        </span>
+                        {{ property.advertiser }}
+                    </p>
+                    <a class="read_btn" href="property_details.html">
+                        More Details
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <span class="property_price">
+                    {{ property.price }}
+                    {{ property.currency.code }}
+                </span>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-gray-500 text-center">No properties found.</p>
+    {% endfor %}
+</div>

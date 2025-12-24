@@ -1,0 +1,77 @@
+<form id="filter-form" class="pt-3" hx-get="{% url 'property:backend_htmx_list' %}" hx-target="#property-table-body"
+    hx-trigger="change, keyup delay:300ms">
+
+    <div class="row g-2">
+        <div class="col-md-12">
+            <h5>
+                Search
+            </h5>
+        </div>
+
+        <div class="col-md-3">
+            <input type="text" name="q" class="form-control" placeholder="Search text...">
+        </div>
+
+        <div class="col-md-3">
+            <select name="property_type" class="form-select">
+                <option value="">All Types</option>
+                {% for t in types %}
+                <option value="{{ t.id }}">{{ t.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <select name="purpose" class="form-select">
+                <option value="">All Purposes</option>
+                <option value="rent">Rent</option>
+                <option value="sell">Sell</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <select name="bedroom" class="form-select">
+                <option value="">Bedrooms</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3+</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <select name="bathroom" class="form-select">
+                <option value="">Bathrooms</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3+</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <select name="country" class="form-select">
+                <option value="">All Country</option>
+                {% for country in countries %}
+                <option value="{{ country.id }}">{{ country.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <input type="number" name="min_price" class="form-control" placeholder="Min Price">
+        </div>
+
+        <div class="col-md-2">
+            <input type="number" name="max_price" class="form-control" placeholder="Max Price">
+        </div>
+
+        <div class="col-md-2">
+            <select name="currency" class="form-select">
+                <option value="">All</option>
+                {% for currency in currencies %}
+                <option value="{{ currency.id }}">{{ currency.code }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+    </div>
+</form>

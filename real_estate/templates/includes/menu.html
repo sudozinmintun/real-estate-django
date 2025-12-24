@@ -1,0 +1,35 @@
+<aside id="sidebar">
+    <button class="btn-new">
+        <i class="material-icons-outlined text-danger">add</i>New
+    </button>
+
+    <nav>
+        <a class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+            href="{% url 'accounts:dashboard' %}" hx-get="{% url 'accounts:dashboard' %}" hx-target="#content"
+            hx-push-url="true">
+            <i class="material-icons-outlined">
+                home
+            </i>
+            Home
+        </a>
+
+        <a class="nav-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
+            href="{% url 'accounts:profile' %}" hx-get="{% url 'accounts:profile' %}" hx-target="#content"
+            hx-push-url="true">
+            <i class="material-icons-outlined">
+                storage
+            </i>
+            My Drive
+        </a>
+
+        <a class="nav-item"><i class="material-icons-outlined">people_outline</i>Shared</a>
+        <a class="nav-item"><i class="material-icons-outlined">delete_outline</i>Trash</a>
+        <a class="nav-item" href="{% url 'accounts:logout' %}" hx-get="{% url 'accounts:logout' %}" hx-target="#content"
+            hx-push-url="true">
+            <i class="material-icons-outlined">
+                logout
+            </i>
+            Logout
+        </a>
+    </nav>
+</aside>

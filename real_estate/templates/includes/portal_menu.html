@@ -1,0 +1,105 @@
+{% load static %}
+<div class="dashboard_sidebar">
+    <div class="dashboard_sidebar_user">
+        <div class="img">
+            <img src="{% static 'assets/images/agent_8.jpg' %}" alt="dashboard" class="img-fluid w-100">
+            <label for="profile_photo"><i class="far fa-camera"></i></label>
+            <input type="file" id="profile_photo" hidden>
+        </div>
+        <h3>
+            {{ user.get_full_name|default:"Welcome" }}
+        </h3>
+        <p>
+            {{ user.profile.country.name|default:"" }}
+            {{ user.profile.city.name|default:"" }}
+        </p>
+    </div>
+
+    <div class="dashboard_sidebar_menu">
+        <ul>
+            <li>
+                <a class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+                    href="{% url 'accounts:dashboard' %}" hx-get="{% url 'accounts:dashboard' %}" hx-target="#content"
+                    hx-push-url="true">
+                    <span>
+                        <img src="{% static 'assets/images/dashboard_icon_1.png' %}" alt="icon" class="img-fluid w-100">
+                    </span>
+                    dashboard
+                </a>
+            </li>
+
+            <li>
+                <a class="{% if request.resolver_match.url_name == 'backend_list' %}active{% endif %}"
+                    href="{% url 'property:backend_list' %}" hx-get="{% url 'property:backend_list' %}"
+                    hx-target="#content" hx-push-url="true">
+                    <span>
+                        <img src="{% static 'assets/images/dashboard_icon_3.png' %}" alt="icon" class="img-fluid w-100">
+                    </span>
+                    Manage Properties
+                </a>
+            </li>
+
+            <li>
+                <a class="{% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
+                    href="{% url 'accounts:profile' %}" hx-get="{% url 'accounts:profile' %}" hx-target="#content"
+                    hx-push-url="true">
+                    <span>
+                        <img src="{% static 'assets/images/dashboard_icon_2.png' %}" alt="icon" class="img-fluid w-100">
+                    </span>
+                    Profile
+                </a>
+            </li>
+
+            <li>
+                <a class="{% if request.resolver_match.url_name == 'pricing_plan' %}active{% endif %}"
+                    href="{% url 'package:pricing_plan' %}" hx-get="{% url 'package:pricing_plan' %}"
+                    hx-target="#content" hx-push-url="true">
+                    <span>
+                        <img src="{% static 'assets/images/dashboard_icon_4.png' %}" alt="icon" class="img-fluid w-100">
+                    </span>
+                    Pricing Plan
+                </a>
+            </li>
+
+
+            <li>
+                <a class="{% if request.resolver_match.url_name == 'order' %}active{% endif %}"
+                    href="{% url 'order:order' %}" hx-get="{% url 'order:order' %}"
+                    hx-target="#content" hx-push-url="true">
+                    <span>
+                        <img src="{% static 'assets/images/dashboard_icon_7.png' %}" alt="icon" class="img-fluid w-100">
+                    </span>
+                    order
+                </a>
+            </li>
+
+            <li>
+                <a href="dashboard_wishlist.html">
+                    <span>
+                        <img src="{% static 'assets/images/dashboard_icon_6.png' %}" alt="icon" class="img-fluid w-100">
+                    </span>
+                    Wishlist
+                </a>
+            </li>
+
+            <li>
+                <a href="dashboard_review.html">
+                    <span>
+                        <img src="{% static 'assets/images/dashboard_icon_5.png' %}" alt="icon" class="img-fluid w-100">
+                    </span>
+                    Reviews
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'accounts:logout' %}" hx-get="{% url 'accounts:logout' %}" hx-target="#content"
+                    hx-push-url="true">
+                    <span>
+                        <img src="{% static 'assets/images/dashboard_icon_8.png' %}" alt="icon" class="img-fluid w-100">
+                    </span>
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
