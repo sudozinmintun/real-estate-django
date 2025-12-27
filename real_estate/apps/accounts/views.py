@@ -53,6 +53,7 @@ def user_register(request):
 
                     profile, created = Profile.objects.get_or_create(user=user)
                     profile.company = company
+                    profile.user_type = "ADMIN"
                     profile.save()
 
                 login(

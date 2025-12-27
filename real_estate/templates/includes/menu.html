@@ -13,17 +13,15 @@
             Home
         </a>
 
-        <a class="nav-item {% if request.resolver_match.url_name == 'profile' %}active{% endif %}"
-            href="{% url 'accounts:profile' %}" hx-get="{% url 'accounts:profile' %}" hx-target="#content"
-            hx-push-url="true">
+        <a class="nav-item {% if request.resolver_match.url_name == 'users' %}active{% endif %}"
+            href="{% url 'users:users' %}" hx-get="{% url 'users:users' %}" hx-target="#content" hx-push-url="true">
             <i class="material-icons-outlined">
-                storage
+                people_outline
             </i>
-            My Drive
+            Users
         </a>
 
-        <a class="nav-item"><i class="material-icons-outlined">people_outline</i>Shared</a>
-        <a class="nav-item"><i class="material-icons-outlined">delete_outline</i>Trash</a>
+
         <a class="nav-item" href="{% url 'accounts:logout' %}" hx-get="{% url 'accounts:logout' %}" hx-target="#content"
             hx-push-url="true">
             <i class="material-icons-outlined">

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block title %}Create User{% endblock %}
+{% block contents %}
+
+<div class="drive-header">Account Details</div>
+
+<div class="container p-0">
+
+    <form hx-post="" hx-target="#content" hx-select="#content" hx-swap="innerHTML" autocomplete="off" novalidate>
+
+        {% csrf_token %}
+
+        <div class="row g-4">
+
+            <!-- LEFT -->
+            <div class="col-md-6">
+                <p class="fw-semibold text-primary mb-2">General Info</p>
+
+                <div class="form-floating mb-3">
+                    {{ user_form.full_name }}
+                    <label>Full name</label>
+                    <div class="text-danger small mt-1">
+                        {{ user_form.full_name.errors|striptags }}
+                    </div>
+                </div>
+
+                <div class="form-floating mb-3">
+                    {{ user_form.email }}
+                    <label>Email address</label>
+                    {% if user_form.email.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in user_form.email.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="form-floating mb-2">
+                    {{ user_form.password }}
+                    <label>Password</label>
+                    <div class="text-danger small mt-1">
+                        {{ user_form.password.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="col-md-6">
+                <p class="fw-semibold text-primary mb-2">Preferences</p>
+
+                <div class="form-floating mb-3">
+                    {{ profile_form.phone }}
+                    <label>Phone</label>
+                    <div class="text-danger small mt-1">
+                        {{ profile_form.phone.errors|striptags }}
+                    </div>
+                </div>
+
+                <div class="form-floating mb-3">
+                    {{ profile_form.gender }}
+                    <label>Gender</label>
+                    <div class="text-danger small mt-1">
+                        {{ profile_form.gender.errors|striptags }}
+                    </div>
+                </div>
+
+                <div class="form-floating mb-2">
+                    {{ profile_form.address }}
+                    <label>Address</label>
+                    <div class="text-danger small mt-1">
+                        {{ profile_form.address.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="form-floating">
+                    {{ profile_form.notes }}
+                    <label>Additional Notes</label>
+                    <div class="text-danger small mt-1">
+                        {{ profile_form.notes.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+                <button type="button" class="btn btn-outline-secondary rounded-pill px-4">
+                    Cancel
+                </button>
+
+                <button class="btn btn-primary rounded-pill px-4 fw-semibold">
+                    Save Changes
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+{% endblock %}

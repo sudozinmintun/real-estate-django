@@ -276,3 +276,141 @@ class CustomPasswordChangeForm(PasswordChangeForm):
             attrs={"class": "form-control", "placeholder": "Confirm Password"}
         )
     )
+
+
+class AddNewUserForm(forms.ModelForm):
+    use_required_attribute = False
+
+    full_name = forms.CharField(
+        required=True,
+        error_messages={"required": "Please enter your full name."},
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Full name"}
+        ),
+    )
+
+    email = forms.EmailField(
+        required=True,
+        error_messages={"required": "Email address is required."},
+        widget=forms.EmailInput(
+            attrs={"class": "form-control", "placeholder": "Email address"}
+        ),
+    )
+
+    password = forms.CharField(
+        required=True,
+        error_messages={"required": "Password is required."},
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Password"}
+        ),
+    )
+
+    class Meta:
+        model = User
+        fields = ["email", "password"]
+
+    # --- initialize (edit mode support) ---
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # preload full_name from first_name
+        if self.instance and self.instance.pk:
+            self.fields["full_name"].initial = self.instance.first_name
+            self.fields["password"].required = False
+
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+
+        qs = User.objects.filter(username=email)
+        if self.instance and self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+
+        if qs.exists():
+            raise forms.ValidationError("This email is already registered.")
+
+        return email
+
+    def clean_password(self):
+        password = self.cleaned_data.get("password")
+        if password and len(password) < 6:
+            raise forms.ValidationError("Password must be at least 6 characters.")
+        return password
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+
+        user.username = self.cleaned_data["email"]
+        user.email = self.cleaned_data["email"]
+
+        user.first_name = self.cleaned_data["full_name"]
+
+        password = self.cleaned_data.get("password")
+        if password:
+            user.set_password(password)
+
+        if commit:
+            user.save()
+
+        return user
+
+
+GENDER_TYPE_CHOICES = [
+    ("MALE", "Male"),
+    ("FEMALE", "Female"),
+]
+
+
+class AddNewProfileForm(forms.ModelForm):
+    phone = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Phone",
+            }
+        ),
+    )
+    address = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Address",
+            }
+        ),
+    )
+
+    notes = forms.CharField(
+        required=False,
+        widget=forms.Textarea(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Notes",
+                "rows": 6,
+            }
+        ),
+    )
+
+    photo = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Profile Photo",
+            }
+        ),
+    )
+
+    gender = forms.ChoiceField(
+        required=True,
+        choices=Profile.GENDER_TYPE_CHOICES,
+        widget=forms.Select(
+            attrs={
+                "class": "form-select",
+            }
+        ),
+    )
+
+    class Meta:
+        model = Profile
+        fields = ["phone", "country", "city", "address", "photo", "gender", "notes"]

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "apps.companies",
+    "apps.users",
     "apps.country",
     "apps.city",
     "apps.package",
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "real_estate.middleware.CompanyMiddleware",
 ]
 
 LOGIN_URL = "/accounts/login/"
@@ -75,6 +77,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+
+                "apps.accounts.context_processors.current_company",
             ],
         },
     },
