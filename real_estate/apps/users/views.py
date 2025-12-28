@@ -3,7 +3,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from apps.accounts.models import Profile
 from apps.accounts.forms import AddNewUserForm, AddNewProfileForm
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
+from django.contrib.auth import logout
 
 
 @login_required(login_url="accounts:login")
@@ -53,8 +55,11 @@ def create(request):
 
 @login_required(login_url="accounts:login")
 def edit(request, pk):
-    user = get_object_or_404(User, pk=pk)
-    profile = get_object_or_404(Profile, user=user)
+    user = User.objects.filter(pk=pk, profile__company=request.company).first()
+    if not user:
+        return redirect("pages:unauthorized")
+
+    profile = user.profile
 
     user_form = AddNewUserForm(request.POST or None, instance=user)
     profile_form = AddNewProfileForm(
@@ -75,7 +80,56 @@ def edit(request, pk):
     context = {
         "user_form": user_form,
         "profile_form": profile_form,
-        "obj": user,
     }
 
     return render(request, "users/form.html", context)
+
+
+@login_required(login_url="accounts:login")
+def delete(request, pk):
+    # 1. Fetch the user (must belong to same company)
+    target_user = User.objects.filter(pk=pk, profile__company=request.company).first()
+
+    if not target_user:
+        messages.error(request, "You cannot access this user.")
+        return redirect("pages:unauthorized")
+
+    # 2. Logic flags
+    is_self = request.user.pk == target_user.pk
+    is_admin = request.user.is_staff  # is_staff = 1 → admin
+
+    # 3. Permission check
+    if not (is_self or is_admin):
+        messages.error(request, "You do not have permission to delete this account.")
+        return redirect("users:users")
+
+    # 4. Prevent deleting the last admin
+    if is_admin:
+        admin_count = User.objects.filter(
+            profile__company=request.company, is_staff=True
+        ).count()
+
+        if target_user.is_staff and admin_count <= 1:
+            messages.error(request, "You can’t delete an admin account.")
+            return redirect("users:users")
+
+    # 5. Handle deletion (POST)
+    if request.method == "POST":
+        username = target_user.username
+        target_user.delete()
+
+        # If they deleted themselves → logout
+        if is_self:
+            logout(request)
+            messages.success(request, "Your account has been successfully deleted.")
+            return redirect("accounts:login")
+
+        messages.success(request, f"User {username} has been deleted.")
+        return redirect("users:users")
+
+    # 6. Confirmation page (GET)
+    return render(
+        request,
+        "users/confirm_delete.html",
+        {"target_user": target_user, "is_self": is_self},
+    )

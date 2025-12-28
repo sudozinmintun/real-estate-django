@@ -36,7 +36,14 @@
                 <td>{{ user.profile.user_type }}</td>
                 <td>{{ user.date_joined|date:"Y-m-d" }}</td>
                 <td>
-
+                    <a href="{% url 'users:edit' user.id %}" hx-get="{% url 'users:edit' user.id %}"
+                        hx-target="#content" hx-push-url="true" class="btn btn-primary">
+                        Edit
+                    </a>
+                    <a href="{% url 'users:delete' user.id %}" hx-get="{% url 'users:delete' user.id %}"
+                        hx-target="#content" hx-push-url="true">
+                        Delete
+                    </a>
                 </td>
             </tr>
             {% empty %}

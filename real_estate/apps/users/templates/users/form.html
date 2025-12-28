@@ -39,6 +39,11 @@
                 <div class="form-floating mb-2">
                     {{ user_form.password }}
                     <label>Password</label>
+                    {% if user_form.instance.pk %}
+                    <div class="text-muted small mt-1">
+                        Leave blank to keep current password
+                    </div>
+                    {% endif %}
                     <div class="text-danger small mt-1">
                         {{ user_form.password.errors|striptags }}
                     </div>

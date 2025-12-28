@@ -3,7 +3,7 @@
     {% for message in messages %}
     Toastify({
         text: "{{ message|escapejs }}",
-        duration: 3000,
+        duration: 5000,
         gravity: "top",
         position: "right",
         className: "{{ message.tags }}",

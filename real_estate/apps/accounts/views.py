@@ -49,6 +49,7 @@ def user_register(request):
                         email=user_data["email"],
                         password=user_data["password"],
                         first_name=user_data["full_name"],
+                        is_staff=1,
                     )
 
                     profile, created = Profile.objects.get_or_create(user=user)

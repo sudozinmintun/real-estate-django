@@ -307,16 +307,21 @@ class AddNewUserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["email", "password"]
+        # IMPORTANT: password NOT in fields (we control it manually)
+        fields = ["email"]
 
-    # --- initialize (edit mode support) ---
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # preload full_name from first_name
         if self.instance and self.instance.pk:
+            # Editing existing user
             self.fields["full_name"].initial = self.instance.first_name
+
+            # Password not required when editing
             self.fields["password"].required = False
+            self.fields["password"].widget.attrs[
+                "placeholder"
+            ] = "Leave blank to keep current password"
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
@@ -341,10 +346,11 @@ class AddNewUserForm(forms.ModelForm):
 
         user.username = self.cleaned_data["email"]
         user.email = self.cleaned_data["email"]
-
         user.first_name = self.cleaned_data["full_name"]
 
         password = self.cleaned_data.get("password")
+
+        # Only set password when user typed something
         if password:
             user.set_password(password)
 

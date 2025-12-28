@@ -7,3 +7,6 @@ def home(request):
 
 def contact(request):
     return render(request, "pages/contact.html")
+
+def unauthorized(request):
+    return render(request, "pages/unauthorized.html")

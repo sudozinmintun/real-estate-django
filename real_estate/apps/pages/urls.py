@@ -5,4 +5,5 @@ app_name = "pages"
 urlpatterns = [
     path("", views.home, name="home"),
     path("contact", views.contact, name="contact"),
+    path("unauthorized", views.unauthorized, name="unauthorized"),
 ]
