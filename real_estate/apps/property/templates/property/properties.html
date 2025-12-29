@@ -10,15 +10,15 @@
         <small class="text-muted">Manage properties and </small>
     </div>
 
-    <a href="{% url 'property:create' %}" hx-get="{% url 'property:create' %}" hx-target="#content"
-        hx-push-url="true" class="btn btn-primary rounded-pill px-3">
+    <a href="{% url 'property:create' %}" hx-get="{% url 'property:create' %}" hx-target="#content" hx-push-url="true"
+        class="btn btn-primary rounded-pill px-3">
         <i class="bi bi-plus-lg me-1"></i>
         Add Property
     </a>
 </div>
 
 <div class="card p-3">
-    {% include 'property/manage/filter_form.html' %}
+    {% include 'property/partials/_filter_form.html' %}
 </div>
 
 <div class="table-responsive">

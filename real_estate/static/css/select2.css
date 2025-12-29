@@ -1,0 +1,34 @@
+/* Make Select2 match Bootstrap floating inputs */
+.form-floating .select2-container--default .select2-selection--single {
+    height: calc(3.5rem + 2px);
+    /* same as .form-control */
+    padding: 1rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: .375rem;
+}
+
+.form-floating .select2-selection__rendered {
+    padding-left: 0;
+    padding-top: .25rem;
+}
+
+.form-floating .select2-selection__arrow {
+    height: 100%;
+    right: .75rem;
+}
+
+/* Keep label floating correctly */
+.form-floating .select2-container--focus+label,
+.form-floating .select2-container--open+label {
+    opacity: .65;
+    transform: scale(.85) translateY(-0.5rem) translateX(.15rem);
+}
+
+/* Ensure full width */
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 55px !important;
+}

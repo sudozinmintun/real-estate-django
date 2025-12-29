@@ -4,6 +4,8 @@ from apps.country.models import Country, Currency
 from apps.property_type.models import PropertyType
 from apps.amenities.models import Amenity
 from django.contrib.auth.models import User
+from apps.companies.models import Company
+from apps.owners.models import Owner
 
 
 class Property(models.Model):
@@ -56,13 +58,26 @@ class Property(models.Model):
     # Amenities (Many to Many)
     amenities = models.ManyToManyField(Amenity, blank=True)
 
-    # User who posted
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="properties")
-
     floor = models.CharField(max_length=100, null=True, blank=True)
     bedroom = models.CharField(max_length=100, null=True, blank=True)
     bathroom = models.CharField(max_length=100, null=True, blank=True)
-    advertiser = models.CharField(max_length=500, null=True, blank=True)
+    owner = models.ForeignKey(
+        Owner,
+        on_delete=models.CASCADE,
+        related_name="properties",
+        null=True,
+        blank=True,
+    )
+
+    # User who posted
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="properties")
+    company = models.ForeignKey(
+        Company,
+        on_delete=models.CASCADE,
+        related_name="properties",
+        null=True,
+        blank=True,
+    )
 
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)

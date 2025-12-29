@@ -42,7 +42,7 @@
     <td>{{ property.price }} {{ property.currency.code }}</td>
 
     <td>
-        {% if property.purpose == "sell" %}
+        {% if property.purpose == "sale" %}
         <span class="badge-purpose badge-sale">For Sale</span>
         {% else %}
         <span class="badge-purpose badge-rent">For Rent</span>
@@ -50,15 +50,14 @@
     </td>
 
     <td>
-        <a href="{% url 'property:backend_edit' property.id %}" hx-boost="false">
+        <a href="{% url 'property:edit' property.id %}" hx-boost="false">
             <i class="far fa-pen"></i> Edit
         </a>
 
-        <a class="delete" hx-post="{% url 'property:backend_delete' property.id %}"
-            hx-target="#property-{{ property.id }}" hx-swap="outerHTML"
-            hx-confirm="Are you sure you want to delete this property?">
-            <i class="far fa-trash"></i> Delete
+        <a href="{% url 'property:delete' property.id %}" hx-boost="false">
+            Deletei
         </a>
+
     </td>
 
 </tr>

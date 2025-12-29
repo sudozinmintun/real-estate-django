@@ -28,73 +28,71 @@ def properties(request):
 @login_required(login_url="accounts:login")
 def property_list_htmx(request):
     q = request.GET.get("q", "").strip()
-    country_id = request.GET.get("country")
-    city_id = request.GET.get("city")
-    township_id = request.GET.get("township")
-    type_id = request.GET.get("property_type")
-    purpose = request.GET.get("purpose")
-    bedroom = request.GET.get("bedroom")
-    bathroom = request.GET.get("bathroom")
-    min_price = request.GET.get("min_price")
-    max_price = request.GET.get("max_price")
-    currency = request.GET.get("currency")
 
-    properties = Property.objects.filter(user=request.user)
+    properties = (
+        Property.objects.filter(company=request.user.profile.company)
+        .select_related(
+            "company",
+            "user",
+            "country",
+            "city",
+            "township",
+            "property_type",
+            "currency",
+            "owner",
+        )
+        .prefetch_related("amenities")
+    )
 
-    # Text search
     if q:
         properties = properties.filter(
             Q(title__icontains=q) | Q(description__icontains=q)
         )
 
-    # Country → City → Township
-    if country_id:
+    if country_id := request.GET.get("country"):
         properties = properties.filter(country_id=country_id)
 
-    if city_id:
+    if city_id := request.GET.get("city"):
         properties = properties.filter(city_id=city_id)
 
-    if township_id:
+    if township_id := request.GET.get("township"):
         properties = properties.filter(township_id=township_id)
 
-    # Property type
-    if type_id:
+    if type_id := request.GET.get("property_type"):
         properties = properties.filter(property_type_id=type_id)
 
-    # Purpose
-    if purpose:
+    if purpose := request.GET.get("purpose"):
         properties = properties.filter(purpose=purpose)
 
-    # Bedrooms + Bathrooms
-    if bedroom:
-        properties = properties.filter(bedroom__icontains=bedroom)
+    if bedroom := request.GET.get("bedroom"):
+        properties = properties.filter(bedroom=bedroom)
 
-    if bathroom:
-        properties = properties.filter(bathroom__icontains=bathroom)
+    if bathroom := request.GET.get("bathroom"):
+        properties = properties.filter(bathroom=bathroom)
 
-    # Price range
-    if min_price:
+    if min_price := request.GET.get("min_price"):
         properties = properties.filter(price__gte=min_price)
 
-    if max_price:
+    if max_price := request.GET.get("max_price"):
         properties = properties.filter(price__lte=max_price)
 
-    if currency:
+    if currency := request.GET.get("currency"):
         properties = properties.filter(currency_id=currency)
 
-    context = {"properties": properties}
-
-    return render(request, "property/partials/_table_body.html", context)
+    return render(
+        request, "property/partials/_table_body.html", {"properties": properties}
+    )
 
 
 @login_required(login_url="accounts:login")
 def create(request):
-    form = PropertyForm(request.POST or None)
+    form = PropertyForm(request.POST or None, company=request.user.profile.company)
 
     if request.method == "POST":
         if form.is_valid():
             property_instance = form.save(commit=False)
             property_instance.user = request.user
+            property_instance.company = request.user.profile.company
             property_instance.save()
             form.save_m2m()
 
@@ -105,33 +103,52 @@ def create(request):
 
 
 @login_required(login_url="accounts:login")
-def property_edit(request, id):
-    property_instance = get_object_or_404(Property, id=id, user=request.user)
-    form = PropertyForm(request.POST or None, instance=property_instance)
+def edit(request, id):
+    property_instance = Property.objects.filter(
+        pk=id, company=request.user.profile.company
+    ).first()
+
+    if not property_instance:
+        messages.error(request, "You cannot access this property.")
+        return redirect("pages:unauthorized")
+
+    form = PropertyForm(
+        request.POST or None,
+        instance=property_instance,
+        company=request.user.profile.company,
+    )
 
     if request.method == "POST":
         if form.is_valid():
             property_instance = form.save(commit=False)
             property_instance.user = request.user
+            property_instance.company = request.user.profile.company
             property_instance.save()
             form.save_m2m()
             messages.success(request, "Property updated successfully!")
-            return redirect("property:backend_list")
+            return redirect("property:properties")
 
-    return render(request, "property/manage/property_form.html", {"form": form})
+    return render(request, "property/form.html", {"form": form})
 
 
 @login_required(login_url="accounts:login")
-@require_http_methods(["POST", "DELETE"])
-def property_delete(request, id):
-    property_instance = get_object_or_404(Property, id=id, user=request.user)
-    property_instance.delete()
+def delete(request, id):
+    property = Property.objects.filter(
+        pk=id, company=request.user.profile.company
+    ).first()
 
-    if request.headers.get("Hx-Request"):
-        return HttpResponse("")  # HTMX removes the row dynamically
+    if not property:
+        messages.error(request, "You cannot access this property.")
+        return redirect("pages:unauthorized")
 
-    messages.success(request, "Property deleted successfully!")
-    return redirect("property:backend_list")
+        # property.delete()
+
+    if request.method == "POST":
+        property.delete()
+        messages.success(request, "Property deleted successfully.")
+        return redirect("property:properties")
+
+    return render(request, "property/confirm_delete.html", {"property": property})
 
 
 @login_required(login_url="accounts:login")

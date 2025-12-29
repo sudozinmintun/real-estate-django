@@ -6,21 +6,14 @@ urlpatterns = [
     path("properties/", views.properties, name="properties"),
     path("properties/htmx-list/", views.property_list_htmx, name="backend_htmx_list"),
     path("property/create", views.create, name="create"),
+    path("property/<int:id>/edit/", views.edit, name="edit"),
+    path("property/<int:id>/delete/", views.delete, name="delete"),
     path(
         "manage/properties/create/",
         views.create,
         name="backend_create",
     ),
-    path(
-        "manage/properties/<int:id>/edit/",
-        views.property_edit,
-        name="backend_edit",
-    ),
-    path(
-        "manage/properties/<int:id>/delete/",
-        views.property_delete,
-        name="backend_delete",
-    ),
+    
     path(
         "manage/properties/<int:id>/upload/",
         views.photo_upload,

@@ -3,6 +3,7 @@ from apps.property.models import Property
 from apps.order.models import Order
 from apps.amenities.models import Amenity
 from apps.city.models import City, Township
+from apps.owners.models import Owner
 
 
 class PropertyAdminForm(forms.ModelForm):
@@ -49,6 +50,13 @@ ADVERTISER_CHOICES = {
 }
 
 
+class OwnerChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        if obj.phone:
+            return f"{obj.name} ({obj.phone})"
+        return obj.name
+
+
 class PropertyForm(forms.ModelForm):
 
     amenities = forms.ModelMultipleChoiceField(
@@ -63,8 +71,8 @@ class PropertyForm(forms.ModelForm):
         required=False,
     )
 
-    advertiser = forms.ChoiceField(
-        choices=ADVERTISER_CHOICES,
+    owner = OwnerChoiceField(
+        queryset=Owner.objects.none(),
         widget=forms.Select(attrs={"class": "form-control select_2"}),
         required=False,
     )
@@ -88,7 +96,7 @@ class PropertyForm(forms.ModelForm):
             "floor",
             "bedroom",
             "bathroom",
-            "advertiser",
+            "owner",
             "amenities",
         ]
 
@@ -129,14 +137,14 @@ class PropertyForm(forms.ModelForm):
             ),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, company=None, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Initially empty querysets
-        # self.fields["city"].queryset = City.objects.none()
-        # self.fields["township"].queryset = Township.objects.none()
+        if company:
+            self.fields["owner"].queryset = Owner.objects.filter(
+                company=company
+            ).select_related("company")
 
-        # If POST data exists, filter querysets accordingly
         if "country" in self.data:
             try:
                 country_id = int(self.data.get("country"))

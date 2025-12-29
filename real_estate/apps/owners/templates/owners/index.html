@@ -38,12 +38,13 @@
                 <td>{{ owner.address }}</td>
                 <td>{{ owner.created_at|date:"Y-m-d" }}</td>
                 <td>
-                    <a href="{% url 'owners:edit' owner.id %}" hx-get="{% url 'owners:edit' owner.id %}"
-                        hx-target="#content" hx-push-url="true" class="btn btn-primary">
+                    <a hx-get="{% url 'owners:edit' owner.id %}" hx-target="#content" hx-push-url="true"
+                        class="btn btn-sm btn-primary me-2">
                         Edit
                     </a>
-                    <a href="{% url 'owners:delete' owner.id %}" hx-get="{% url 'owners:delete' owner.id %}"
-                        hx-target="#content" hx-push-url="true">
+
+                    <a hx-get="{% url 'owners:delete' owner.id %}" hx-target="#content" hx-push-url="true"
+                        class="btn btn-sm btn-outline-danger">
                         Delete
                     </a>
                 </td>
