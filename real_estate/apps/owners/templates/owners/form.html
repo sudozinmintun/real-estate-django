@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Create User{% endblock %}
+{% block contents %}
+
+<div class="drive-header">Owner Details</div>
+
+<div class="container p-0">
+
+    <form hx-post="" hx-target="#content" hx-select="#content" hx-swap="innerHTML" autocomplete="off" novalidate>
+        {% csrf_token %}
+
+        <div class="row g-4">
+
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    {{ form.name }}
+                    <label>Name</label>
+                    <div class="text-danger small mt-1">
+                        {{ form.name.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-floating mb-3">
+                    {{ form.phone }}
+                    <label for="{{ form.phone.id_for_label }}">Phone</label>
+
+                    <div class="text-danger small mt-1">
+                        {{ form.phone.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <!-- Email -->
+                <div class="form-floating mb-3">
+                    {{ form.email }}
+                    <label for="{{ form.email.id_for_label }}">Email address</label>
+
+                    <div class="text-danger small mt-1">
+                        {{ form.email.errors|striptags }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <!-- Address -->
+                <div class="form-floating mb-2">
+                    {{ form.address }}
+                    <label for="{{ form.address.id_for_label }}">Address</label>
+
+                    <div class="text-danger small mt-1">
+                        {{ form.address.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACTIONS -->
+            <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+                <a href="{% url 'owners:index' %}" hx-get="{% url 'owners:index' %}" hx-target="#content"
+                    hx-push-url="true" class="btn btn-outline-secondary rounded-pill px-4">
+                    Cancel
+                </a>
+
+                <button class="btn btn-primary rounded-pill px-4 fw-semibold">
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </form>
+
+
+</div>
+
+
+{% endblock %}

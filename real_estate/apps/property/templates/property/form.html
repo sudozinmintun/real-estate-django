@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% block title %}Create{% endblock %}
+{% block contents %}
+
+<div class="drive-header">
+    Property Details
+</div>
+
+<div class="container p-0">
+    <form method="POST" action="" hx-boost="false" hx-disable="true">
+
+        {% csrf_token %}
+
+        <div class="row g-4">
+
+            <!-- Title -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.title }}
+                    <label>Title</label>
+                    <div class="text-danger small">
+                        {{ form.title.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property Type -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.property_type }}
+                    <label>Property Type</label>
+                    <div class="text-danger small">
+                        {{ form.property_type.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Area -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.area }}
+                    <label>Area</label>
+                    <div class="text-danger small">
+                        {{ form.area.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Area Unit -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.area_unit }}
+                    <label>Unit</label>
+                    <div class="text-danger small">
+                        {{ form.area_unit.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Country -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.country }}
+                    <label>Country</label>
+                    <div class="text-danger small">{{ form.country.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- City -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.city }}
+                    <label>City</label>
+                    <div class="text-danger small">
+                        {{ form.city.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Township -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.township }}
+                    <label>Township</label>
+                    <div class="text-danger small">
+                        {{ form.township.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Purpose -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.purpose }}
+                    <label>Purpose</label>
+                    <div class="text-danger small">
+                        {{ form.purpose.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.floor }}
+                    <label>Floor</label>
+                    <div class="text-danger small">
+                        {{ form.floor.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.bedroom }}
+                    <label>Bedroom</label>
+                    <div class="text-danger small">
+                        {{ form.bedroom.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.bathroom }}
+                    <label>Bathroom</label>
+                    <div class="text-danger small">
+                        {{ form.bathroom.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.advertiser }}
+                    <label>Advertiser</label>
+                    <div class="text-danger small">
+                        {{ form.advertiser.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.price }}
+                    <label>Price</label>
+                    <div class="text-danger small">
+                        {{ form.price.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Currency -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.currency }}
+                    <label>Currency</label>
+                    <div class="text-danger small">
+                        {{ form.currency.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property Status -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.property_status }}
+                    <label>Property Status</label>
+                </div>
+            </div>
+
+            <!-- Video Link -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.video_link }}
+                    <label>Video Link</label>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="col-md-12">
+                <div class="form-floating">
+                    {{ form.description }}
+                    <label>Description</label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="add_property_info add_property_aminities mt-5">
+            <h3>Amenities & Facilities</h3>
+            <div class="row">
+                {% for checkbox in form.amenities %}
+                <div class="col-xxl-3 col-sm-6 col-lg-4">
+                    <div class="form-check">
+                        {{ checkbox.tag }}
+                        <label class="form-check-label" for="{{ checkbox.id_for_label }}">
+                            {{ checkbox.choice_label }}
+                        </label>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+            <a href="{% url 'property:properties' %}" hx-get="{% url 'property:properties' %}" hx-target="#content"
+                hx-push-url="true" class="btn btn-outline-secondary rounded-pill px-4">
+                Cancel
+            </a>
+
+            <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
+                Save Property
+            </button>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

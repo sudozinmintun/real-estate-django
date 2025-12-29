@@ -57,7 +57,17 @@ def create(request):
 def edit(request, pk):
     user = User.objects.filter(pk=pk, profile__company=request.company).first()
     if not user:
+        messages.error(request, "You cannot access this user.")
         return redirect("pages:unauthorized")
+
+    # 2. Logic flags
+    is_self = request.user.pk == user.pk
+    is_admin = request.user.is_staff  # is_staff = 1 → admin
+
+    # 3. Permission check
+    if not (is_self or is_admin):
+        messages.error(request, "You do not have permission to edit this account.")
+        return redirect("users:users")
 
     profile = user.profile
 

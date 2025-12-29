@@ -59,13 +59,13 @@ class PropertyForm(forms.ModelForm):
 
     property_status = forms.ChoiceField(
         choices=PROPERTY_STATUS_CHOICES,
-        widget=forms.Select(attrs={"class": "select_2"}),
+        widget=forms.Select(attrs={"class": "form-control select_2"}),
         required=False,
     )
 
     advertiser = forms.ChoiceField(
         choices=ADVERTISER_CHOICES,
-        widget=forms.Select(attrs={"class": "select_2"}),
+        widget=forms.Select(attrs={"class": "form-control select_2"}),
         required=False,
     )
 
@@ -93,26 +93,39 @@ class PropertyForm(forms.ModelForm):
         ]
 
         widgets = {
-            "title": forms.TextInput(attrs={"placeholder": "Property Title"}),
-            "property_type": forms.Select(attrs={"class": "select_2"}),
-            "area": forms.TextInput(attrs={"placeholder": "Size"}),
-            "area_unit": forms.Select(attrs={"class": "select_2"}),
-            "country": forms.Select(attrs={"class": "select_2"}),
-            "city": forms.Select(attrs={"class": "select_2"}),
-            "township": forms.Select(attrs={"class": "select_2"}),
-            "purpose": forms.Select(attrs={"class": "select_2"}),
-            "price": forms.NumberInput(attrs={"placeholder": "Price"}),
-            "currency": forms.Select(attrs={"class": "select_2"}),
-            "floor": forms.TextInput(
-                attrs={"placeholder": "e.g. Ground, 1st Floor, Penthouse"}
+            "title": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Property Title"}
             ),
-            "bedroom": forms.TextInput(attrs={"placeholder": "e.g. 1, 2, Studio"}),
-            "bathroom": forms.TextInput(attrs={"placeholder": "e.g. 1, 2, 1.5"}),
+            "property_type": forms.Select(attrs={"class": "form-control select_2"}),
+            "area": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Size"}
+            ),
+            "area_unit": forms.Select(attrs={"class": "form-control select_2"}),
+            "country": forms.Select(attrs={"class": "form-control select_2"}),
+            "city": forms.Select(attrs={"class": "form-control select_2"}),
+            "township": forms.Select(attrs={"class": "form-control select_2"}),
+            "purpose": forms.Select(attrs={"class": "form-control select_2"}),
+            "price": forms.NumberInput(
+                attrs={"class": "form-control", "placeholder": "Price"}
+            ),
+            "currency": forms.Select(attrs={"class": "form-control select_2"}),
+            "floor": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "e.g. Ground, 1st Floor, Penthouse",
+                }
+            ),
+            "bedroom": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "e.g. 1, 2, Studio"}
+            ),
+            "bathroom": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "e.g. 1, 2, 1.5"}
+            ),
             "video_link": forms.TextInput(
-                attrs={"placeholder": "YouTube or Video URL"}
+                attrs={"class": "form-control", "placeholder": "YouTube or Video URL"}
             ),
             "description": forms.Textarea(
-                attrs={"class": "form-control summer_note", "rows": 4}
+                attrs={"class": "form-control summer_note", "rows": 10}
             ),
         }
 
