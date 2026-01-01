@@ -1,27 +1,16 @@
 {% for property in properties %}
 <tr id="property-{{ property.id }}" class="property-table">
-
-    <td width="80">
-        {% if property.photos.first %}
-        <img src="{{ property.photos.first.image.url }}" class="img-fluid rounded"
-            style="width:80px; height:60px; object-fit:cover;">
-        {% else %}
-        <div class="bg-light rounded d-flex align-items-center justify-content-center" style="width:80px; height:60px;">
-            <i class="far fa-image text-muted"></i>
-        </div>
-        {% endif %}
-
-        <a href="{% url 'property:backend_photo_upload' property.id %}" hx-boost="false" class="d-block mt-1 small">
-            <i class="far fa-upload"></i> Upload
-        </a>
-    </td>
-
     <td>
-        {{ property.title|truncatechars:30 }}
+        {{ property.title|truncatechars:25 }}
+    </td>
+    <td>
+        {{ property.property_status }}
         <div class="small text-muted mt-1">
-            <i class="far fa-bed"></i> {{ property.bedroom|default_if_none:"0" }}
+            <i class="bi bi-house-door" title="bedroom"></i>
+            {{ property.bedroom|default_if_none:"0" }}
             &nbsp;&nbsp;
-            <i class="far fa-bath"></i> {{ property.bathroom|default_if_none:"0" }}
+            <i class="bi bi-bucket" title="bathroom"></i>
+            {{ property.bathroom|default_if_none:"0" }}
         </div>
     </td>
 
@@ -43,27 +32,37 @@
 
     <td>
         {% if property.purpose == "sale" %}
-        <span class="badge-purpose badge-sale">For Sale</span>
+        <span class="badge bg-primary">
+            For Sale
+        </span>
         {% else %}
-        <span class="badge-purpose badge-rent">For Rent</span>
+        <span class="badge bg-info">
+            For Rent
+        </span>
         {% endif %}
     </td>
 
     <td>
-        <a href="{% url 'property:edit' property.id %}" hx-boost="false">
-            <i class="far fa-pen"></i> Edit
-        </a>
-
-        <a href="{% url 'property:delete' property.id %}" hx-boost="false">
-            Deletei
-        </a>
-
+        {{property.owner.name}}
     </td>
 
+    <td>
+        <a href="{% url 'property:edit' property.id %}" hx-boost="false" class="btn btn-sm text-info fw-semibold">
+            More
+        </a>
+
+        <a href="{% url 'property:edit' property.id %}" hx-boost="false" class="btn btn-sm text-primary fw-semibold">
+            Edit
+        </a>
+
+        <a href="{% url 'property:delete' property.id %}" hx-boost="false" class="btn btn-sm text-danger fw-semibold">
+            Delete
+        </a>
+    </td>
 </tr>
 {% empty %}
 <tr>
-    <td colspan="7" class="text-center text-muted py-4">
+    <td colspan="8" class="text-center text-muted py-4">
         No properties found.
     </td>
 </tr>

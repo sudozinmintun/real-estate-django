@@ -10,17 +10,21 @@ from django.http import HttpResponse
 from django.db.models import Q
 from apps.property_type.models import PropertyType
 from apps.country.models import Currency, Country
-
+from apps.owners.models import Owner
+from .forms import PROPERTY_STATUS_CHOICES
 
 @login_required(login_url="accounts:login")
 def properties(request):
     types = PropertyType.objects.all()
     currencies = Currency.objects.all()
     countries = Country.objects.all()
+    owners = Owner.objects.filter(company=request.company).select_related("company")
     context = {
         "types": types,
         "currencies": currencies,
         "countries": countries,
+        "owners": owners,
+        "PROPERTY_STATUS_CHOICES": PROPERTY_STATUS_CHOICES,
     }
     return render(request, "property/properties.html", context=context)
 
@@ -69,6 +73,15 @@ def property_list_htmx(request):
 
     if bathroom := request.GET.get("bathroom"):
         properties = properties.filter(bathroom=bathroom)
+
+    if floor := request.GET.get("floor"):
+        properties = properties.filter(floor=floor)
+
+    if property_status := request.GET.get("property_status"):
+        properties = properties.filter(property_status=property_status)
+
+    if owner := request.GET.get("owner"):
+        properties = properties.filter(owner=owner)
 
     if min_price := request.GET.get("min_price"):
         properties = properties.filter(price__gte=min_price)
@@ -140,8 +153,6 @@ def delete(request, id):
     if not property:
         messages.error(request, "You cannot access this property.")
         return redirect("pages:unauthorized")
-
-        # property.delete()
 
     if request.method == "POST":
         property.delete()

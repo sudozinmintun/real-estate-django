@@ -16,22 +16,19 @@
         Add Property
     </a>
 </div>
-
-<div class="card p-3">
-    {% include 'property/partials/_filter_form.html' %}
-</div>
-
-<div class="table-responsive">
-    <table class="table table-hover align-middle">
+{% include 'property/partials/_filter_form.html' %}
+<div class="table-responsive pt-3">
+    <table class="table table-hover align-middle text-nowrap">
         <thead class="table-light">
             <tr class="fw-semibold">
-                <th>images</th>
-                <th>details</th>
-                <th>type/area</th>
+                <th>Title</th>
+                <th>Details</th>
+                <th>Type/Area</th>
                 <th>Country/City</th>
-                <th>price</th>
+                <th>Price</th>
                 <th>Purpose</th>
-                <th>action</th>
+                <th>Owner</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody id="property-table-body" hx-get="{% url 'property:backend_htmx_list' %}" hx-trigger="load"

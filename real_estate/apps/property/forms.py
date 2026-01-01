@@ -32,22 +32,16 @@ class PropertyAdminForm(forms.ModelForm):
 
         return cleaned_data
 
-
 PROPERTY_STATUS_CHOICES = [
     ("", "Select Status"),
-    ("fully_furnished", "Fully Furnished"),
-    ("semi_furnished", "Semi Furnished"),
-    ("unfurnished", "Unfurnished"),
-    ("under_renovation", "Under Renovation"),
-    ("newly_built", "Newly Built"),
-    ("move_in_ready", "Move-in Ready"),
-    ("pre_owned", "Pre-Owned"),
+    ("Fully Furnished", "Fully Furnished"),
+    ("Semi Furnished", "Semi Furnished"),
+    ("Unfurnished", "Unfurnished"),
+    ("Under Renovation", "Under Renovation"),
+    ("Newly Built", "Newly Built"),
+    ("Move-in Ready", "Move-in Ready"),
+    ("Pre-Owned", "Pre-Owned"),
 ]
-
-ADVERTISER_CHOICES = {
-    ("Agent", "Agent"),
-    ("Owner", "Owner"),
-}
 
 
 class OwnerChoiceField(forms.ModelChoiceField):
@@ -73,6 +67,18 @@ class PropertyForm(forms.ModelForm):
 
     owner = OwnerChoiceField(
         queryset=Owner.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control select_2"}),
+        required=False,
+    )
+
+    city = forms.ModelChoiceField(
+        queryset=City.objects.none(),
+        widget=forms.Select(attrs={"class": "form-control select_2"}),
+        required=False,
+    )
+
+    township = forms.ModelChoiceField(
+        queryset=Township.objects.none(),
         widget=forms.Select(attrs={"class": "form-control select_2"}),
         required=False,
     )
@@ -140,28 +146,39 @@ class PropertyForm(forms.ModelForm):
     def __init__(self, *args, company=None, **kwargs):
         super().__init__(*args, **kwargs)
 
+        # Filter owner by company
         if company:
             self.fields["owner"].queryset = Owner.objects.filter(
                 company=company
             ).select_related("company")
 
+        # ===== Populate city queryset based on selected country =====
         if "country" in self.data:
             try:
                 country_id = int(self.data.get("country"))
                 self.fields["city"].queryset = City.objects.filter(
                     country_id=country_id
-                )
+                ).order_by("name")
             except (ValueError, TypeError):
-                pass
+                self.fields["city"].queryset = City.objects.none()
+        elif self.instance.pk and self.instance.city:
+            self.fields["city"].queryset = City.objects.filter(
+                country=self.instance.country
+            )
 
+        # ===== Populate township queryset based on selected city =====
         if "city" in self.data:
             try:
                 city_id = int(self.data.get("city"))
                 self.fields["township"].queryset = Township.objects.filter(
                     city_id=city_id
-                )
+                ).order_by("name")
             except (ValueError, TypeError):
-                pass
+                self.fields["township"].queryset = Township.objects.none()
+        elif self.instance.pk and self.instance.township:
+            self.fields["township"].queryset = Township.objects.filter(
+                city=self.instance.city
+            )
 
     def clean(self):
         cleaned_data = super().clean()

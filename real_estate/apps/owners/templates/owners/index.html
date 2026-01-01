@@ -39,12 +39,12 @@
                 <td>{{ owner.created_at|date:"Y-m-d" }}</td>
                 <td>
                     <a hx-get="{% url 'owners:edit' owner.id %}" hx-target="#content" hx-push-url="true"
-                        class="btn btn-sm btn-primary me-2">
+                        class="btn btn-sm text-primary">
                         Edit
                     </a>
 
                     <a hx-get="{% url 'owners:delete' owner.id %}" hx-target="#content" hx-push-url="true"
-                        class="btn btn-sm btn-outline-danger">
+                        class="btn btn-sm text-danger">
                         Delete
                     </a>
                 </td>

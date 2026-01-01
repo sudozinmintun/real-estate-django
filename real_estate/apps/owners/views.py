@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from apps.owners.models import Owner
 from apps.owners.forms import OwnerForm
 from django.contrib import messages
-from django.shortcuts import get_object_or_404
 
 
 @login_required(login_url="accounts:login")

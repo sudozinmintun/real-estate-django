@@ -37,11 +37,11 @@
                 <td>{{ user.date_joined|date:"Y-m-d" }}</td>
                 <td>
                     <a href="{% url 'users:edit' user.id %}" hx-get="{% url 'users:edit' user.id %}"
-                        hx-target="#content" hx-push-url="true" class="btn btn-primary">
+                        hx-target="#content" hx-push-url="true" class="btn btn-sm text-primary">
                         Edit
                     </a>
                     <a href="{% url 'users:delete' user.id %}" hx-get="{% url 'users:delete' user.id %}"
-                        hx-target="#content" hx-push-url="true">
+                        hx-target="#content" hx-push-url="true" class="btn btn-sm text-danger">
                         Delete
                     </a>
                 </td>

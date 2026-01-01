@@ -2,12 +2,7 @@
     hx-trigger="change, keyup delay:300ms">
 
     <div class="row g-2">
-        <div class="col-md-12">
-            <h5>
-                Search
-            </h5>
-        </div>
-
+        <!-- Main Filters -->
         <div class="col-md-3">
             <input type="text" name="q" class="form-control" placeholder="Search text...">
         </div>
@@ -29,49 +24,127 @@
             </select>
         </div>
 
-        <div class="col-md-3">
-            <select name="bedroom" class="form-select">
-                <option value="">Bedrooms</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3+</option>
-            </select>
+        <!-- Show/Hide Advanced Filters Button -->
+        <div class="col-md-3 d-flex align-items-center">
+            <button class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="collapse"
+                data-bs-target="#advanced-filters" aria-expanded="false" aria-controls="advanced-filters">
+                More Filters
+            </button>
         </div>
+    </div>
 
-        <div class="col-md-3">
-            <select name="bathroom" class="form-select">
-                <option value="">Bathrooms</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3+</option>
-            </select>
+    <!-- Advanced Filters (Collapsed by default) -->
+    <div class="collapse mt-2" id="advanced-filters">
+        <div class="row g-2">
+
+            <!-- Bedrooms -->
+            <div class="col-md-3">
+                <select name="bedroom" class="form-select">
+                    <option value="">Bedrooms</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3+</option>
+                </select>
+            </div>
+
+            <!-- Bathrooms -->
+            <div class="col-md-3">
+                <select name="bathroom" class="form-select">
+                    <option value="">Bathrooms</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3+</option>
+                </select>
+            </div>
+
+            <!-- Floor -->
+            <div class="col-md-3">
+                <select name="floor" class="form-select">
+                    <option value="">Floor</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3+</option>
+                </select>
+            </div>
+
+            <!-- Property Status -->
+            <div class="col-md-3">
+                <select name="property_status" class="form-select">
+                    {% for status in PROPERTY_STATUS_CHOICES %}
+                    <option value="{{ status.0 }}">
+                        {{ status.1 }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Owner -->
+            <div class="col-md-3">
+                <select name="owner" class="form-select">
+                    <option value="">All Owners</option>
+                    {% for owner in owners %}
+                    <option value="{{ owner.id }}">
+                        {{ owner.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Country -->
+            <div class="col-md-3">
+                <select name="country" class="form-select" id="id_country_filter">
+                    <option value="">All Country</option>
+                    {% for country in countries %}
+                    <option value="{{ country.id }}">{{ country.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- City -->
+            <div class="col-md-3">
+                <select name="city" class="form-select" id="id_city_filter">
+                    <option value="">All Cities</option>
+                    {% for city in cities %}
+                    <option value="{{ city.id }}">{{ city.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Township -->
+            <div class="col-md-3">
+                <select name="township" class="form-select" id="id_township_filter">
+                    <option value="">All Townships</option>
+                    {% for township in townships %}
+                    <option value="{{ township.id }}">{{ township.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Min/Max Price -->
+            <div class="col-md-2">
+                <input type="number" name="min_price" class="form-control" placeholder="Min Price">
+            </div>
+
+            <div class="col-md-2">
+                <input type="number" name="max_price" class="form-control" placeholder="Max Price">
+            </div>
+
+            <!-- Currency -->
+            <div class="col-md-2">
+                <select name="currency" class="form-select">
+                    <option value="">All</option>
+                    {% for currency in currencies %}
+                    <option value="{{ currency.id }}">{{ currency.code }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-3 d-flex align-items-center">
+                <button class="btn btn-outline-danger w-100" type="button" id="reset-filters">
+                    Reset Filters
+                </button>
+            </div>
+
         </div>
-
-        <div class="col-md-3">
-            <select name="country" class="form-select">
-                <option value="">All Country</option>
-                {% for country in countries %}
-                <option value="{{ country.id }}">{{ country.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="col-md-2">
-            <input type="number" name="min_price" class="form-control" placeholder="Min Price">
-        </div>
-
-        <div class="col-md-2">
-            <input type="number" name="max_price" class="form-control" placeholder="Max Price">
-        </div>
-
-        <div class="col-md-2">
-            <select name="currency" class="form-select">
-                <option value="">All</option>
-                {% for currency in currencies %}
-                <option value="{{ currency.id }}">{{ currency.code }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
     </div>
 </form>
