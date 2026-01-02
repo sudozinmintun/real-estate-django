@@ -1,0 +1,109 @@
+<script>
+    if (!window.menuBtn) {
+        window.menuBtn = document.getElementById("menuBtn");
+        window.sidebar = document.getElementById("sidebar");
+        window.overlay = document.getElementById("overlay");
+
+        function toggleMenu() {
+            window.sidebar.classList.toggle("open");
+            window.overlay.classList.toggle("active");
+        }
+
+        window.menuBtn.addEventListener("click", toggleMenu);
+        window.overlay.addEventListener("click", toggleMenu);
+    }
+</script>
+
+<script>
+    function initSelect2() {
+        if ($('.select_2').length) {
+            $('.select_2').select2();
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", initSelect2);
+
+    // Re-init Select2 after HTMX swaps
+    document.body.addEventListener("htmx:afterSwap", function (evt) {
+        $(evt.detail.target).find('.select_2').select2();
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#id_country').change(function () {
+            var countryId = $(this).val();
+            $.ajax({
+                url: "{% url 'city:get_cities' %}",
+                data: {
+                    'country_id': countryId
+                },
+                success: function (data) {
+                    $("#id_city").html(data);
+                    $("#id_township").html('<option value="">---------</option>');
+                }
+            });
+        });
+
+        $('#id_city').change(function () {
+            var cityId = $(this).val();
+            $.ajax({
+                url: "{% url 'city:get_townships' %}",
+                data: {
+                    'city_id': cityId
+                },
+                success: function (data) {
+                    $("#id_township").html(data);
+                }
+            });
+        });
+
+
+        $('#id_country_filter').change(function () {
+            var countryId = $(this).val();
+            $.ajax({
+                url: "{% url 'city:get_cities' %}",
+                data: {
+                    'country_id': countryId
+                },
+                success: function (data) {
+                    $("#id_city_filter").html(data);
+                    $("#id_township_filter").html('<option value="">---------</option>');
+                }
+            });
+        });
+
+        $('#id_city_filter').change(function () {
+            var cityId = $(this).val();
+            $.ajax({
+                url: "{% url 'city:get_townships' %}",
+                data: {
+                    'city_id': cityId
+                },
+                success: function (data) {
+                    $("#id_township_filter").html(data);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    // Use event delegation to handle dynamically swapped content
+    document.body.addEventListener("click", function (e) {
+        // Check if clicked element is the reset button
+        if (e.target.matches("#reset-filters")) {
+            const filterForm = document.getElementById("filter-form");
+            if (!filterForm) return;
+
+            // Clear all input fields
+            filterForm.querySelectorAll("input").forEach(input => input.value = "");
+
+            // Reset all select fields to first option
+            filterForm.querySelectorAll("select").forEach(select => select.selectedIndex = 0);
+
+            // Trigger HTMX change event manually to re-fetch filtered content
+            filterForm.dispatchEvent(new Event('change'));
+        }
+    });
+</script>

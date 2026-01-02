@@ -27,7 +27,7 @@
 
 </head>
 
-<body id="content" hx-boost="true">
+<body>
     <div class="hx-progress"></div>
 
     <div id="content">
@@ -46,117 +46,9 @@
         </div>
     </div>
 
-
     <script src="{% static 'js/loading.js' %}"></script>
-
-    <script>
-        const menuBtn = document.getElementById("menuBtn");
-        const sidebar = document.getElementById("sidebar");
-        const overlay = document.getElementById("overlay");
-
-        function toggleMenu() {
-            sidebar.classList.toggle("open");
-            overlay.classList.toggle("active");
-        }
-
-        menuBtn.addEventListener("click", toggleMenu);
-        overlay.addEventListener("click", toggleMenu);
-    </script>
-
-    <script>
-        function initSelect2() {
-            if ($('.select_2').length) {
-                $('.select_2').select2();
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", initSelect2);
-
-        // Re-init Select2 after HTMX swaps
-        document.body.addEventListener("htmx:afterSwap", function (evt) {
-            $(evt.detail.target).find('.select_2').select2();
-        });
-    </script>
-
-
-    <script>
-        $(document).ready(function () {
-            $('#id_country').change(function () {
-                var countryId = $(this).val();
-                $.ajax({
-                    url: "{% url 'city:get_cities' %}",
-                    data: {
-                        'country_id': countryId
-                    },
-                    success: function (data) {
-                        $("#id_city").html(data);
-                        $("#id_township").html('<option value="">---------</option>');
-                    }
-                });
-            });
-
-            $('#id_city').change(function () {
-                var cityId = $(this).val();
-                $.ajax({
-                    url: "{% url 'city:get_townships' %}",
-                    data: {
-                        'city_id': cityId
-                    },
-                    success: function (data) {
-                        $("#id_township").html(data);
-                    }
-                });
-            });
-
-
-            $('#id_country_filter').change(function () {
-                var countryId = $(this).val();
-                $.ajax({
-                    url: "{% url 'city:get_cities' %}",
-                    data: {
-                        'country_id': countryId
-                    },
-                    success: function (data) {
-                        $("#id_city_filter").html(data);
-                        $("#id_township_filter").html('<option value="">---------</option>');
-                    }
-                });
-            });
-
-            $('#id_city_filter').change(function () {
-                var cityId = $(this).val();
-                $.ajax({
-                    url: "{% url 'city:get_townships' %}",
-                    data: {
-                        'city_id': cityId
-                    },
-                    success: function (data) {
-                        $("#id_township_filter").html(data);
-                    }
-                });
-            });
-        });
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const resetButton = document.getElementById("reset-filters");
-            const filterForm = document.getElementById("filter-form");
-
-            resetButton.addEventListener("click", function () {
-                // Clear all input fields
-                filterForm.querySelectorAll("input").forEach(input => input.value = "");
-
-                // Reset all select fields to first option
-                filterForm.querySelectorAll("select").forEach(select => select.selectedIndex = 0);
-
-                // Trigger HTMX change event manually
-                filterForm.dispatchEvent(new Event('change'));
-            });
-        });
-    </script>
-
-    {% include 'messages.html' %}
+    {% include 'includes/scripts.html' %}
+    {% include 'includes/messages.html' %}
 </body>
 
 </html>

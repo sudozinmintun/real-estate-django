@@ -148,15 +148,21 @@ aside {
     }
 }
 
-/* Loading  */
+/* Progress bar container */
 .hx-progress {
     position: fixed;
     top: 0;
     left: 0;
-    height: 2px;
-    width: 0%;
-    background: #1a73e8;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(to right, #3b82f6 0%, #60a5fa 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
     z-index: 9999;
-    transition: width 0.3s ease, opacity 0.4s ease;
-    opacity: 0;
+}
+
+/* Active state */
+.hx-progress.active {
+    transform: scaleX(1);
 }

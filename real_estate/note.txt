@@ -7,7 +7,8 @@ Advertiser need to change
     Own (mean this apartment is your apartment)
 ]
 
-
+Bank ချိတ်ရမရ if sale
+add monthly or yearl if rent
 
 
 ==========

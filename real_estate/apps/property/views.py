@@ -13,6 +13,7 @@ from apps.country.models import Currency, Country
 from apps.owners.models import Owner
 from .forms import PROPERTY_STATUS_CHOICES
 
+
 @login_required(login_url="accounts:login")
 def properties(request):
     types = PropertyType.objects.all()
@@ -160,6 +161,23 @@ def delete(request, id):
         return redirect("property:properties")
 
     return render(request, "property/confirm_delete.html", {"property": property})
+
+
+@login_required(login_url="accounts:login")
+def details(request, id):
+    property = Property.objects.filter(
+        pk=id, company=request.user.profile.company
+    ).first()
+
+    if not property:
+        messages.error(request, "You cannot access this property.")
+        return redirect("pages:unauthorized")
+
+    context = {
+        "property": property,
+    }
+
+    return render(request, "property/details.html", context)
 
 
 @login_required(login_url="accounts:login")

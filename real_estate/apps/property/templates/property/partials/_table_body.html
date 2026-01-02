@@ -1,10 +1,12 @@
 {% for property in properties %}
 <tr id="property-{{ property.id }}" class="property-table">
-    <td>
+    <td title="Title">
         {{ property.title|truncatechars:25 }}
     </td>
     <td>
-        {{ property.property_status }}
+        <div title="Property Status">
+            {{ property.property_status }}
+        </div>
         <div class="small text-muted mt-1">
             <i class="bi bi-house-door" title="bedroom"></i>
             {{ property.bedroom|default_if_none:"0" }}
@@ -15,22 +17,24 @@
     </td>
 
     <td>
-        <strong>{{ property.property_type.name }}</strong><br>
-        <span class="text-muted small">
+        <strong title="Property Type">{{ property.property_type.name }}</strong><br>
+        <span class="text-muted small" title="Area">
             {{ property.area }} {{ property.area_unit }}
         </span>
     </td>
 
-    <td>
+    <td title="Country / City">
         {{ property.country.name }}<br>
         <span class="text-muted small">
             {{ property.city.name }} {{ property.township.name }}
         </span>
     </td>
 
-    <td>{{ property.price }} {{ property.currency.code }}</td>
+    <td title="Price">
+        {{ property.price }} {{ property.currency.code }}
+    </td>
 
-    <td>
+    <td title="Purpose">
         {% if property.purpose == "sale" %}
         <span class="badge bg-primary">
             For Sale
@@ -42,20 +46,28 @@
         {% endif %}
     </td>
 
-    <td>
+    <td title="Property Owner">
         {{property.owner.name}}
     </td>
 
     <td>
-        <a href="{% url 'property:edit' property.id %}" hx-boost="false" class="btn btn-sm text-info fw-semibold">
+        <a href="{% url 'property:details' property.id %}" hx-get="{% url 'property:details' property.id %}"
+            hx-target="#content" hx-push-url="true" class="btn btn-sm text-info fw-semibold" title="More Details">
             More
         </a>
 
-        <a href="{% url 'property:edit' property.id %}" hx-boost="false" class="btn btn-sm text-primary fw-semibold">
+        <a href="{% url 'property:edit' property.id %}" hx-get="{% url 'property:edit' property.id %}"
+            hx-target="#content" hx-push-url="true" class="btn btn-sm text-success fw-semibold" title="Share">
+            Share
+        </a>
+
+        <a href="{% url 'property:edit' property.id %}" hx-get="{% url 'property:edit' property.id %}"
+            hx-target="#content" hx-push-url="true" class="btn btn-sm text-primary fw-semibold" title="Edit Property">
             Edit
         </a>
 
-        <a href="{% url 'property:delete' property.id %}" hx-boost="false" class="btn btn-sm text-danger fw-semibold">
+        <a href="{% url 'property:delete' property.id %}" hx-get="{% url 'property:delete' property.id %}"
+            hx-target="#content" hx-push-url="true" class="btn btn-sm text-danger fw-semibold" title="Delete Property">
             Delete
         </a>
     </td>
