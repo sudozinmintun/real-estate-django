@@ -48,12 +48,24 @@ class Property(models.Model):
     currency = models.ForeignKey(
         Currency, on_delete=models.SET_NULL, null=True, blank=True
     )
+    price_frequency = models.CharField(
+        max_length=100, null=True, blank=True
+    )  # monthly or yearly
+    contract_duration = models.CharField(max_length=100, null=True, blank=True)
 
     # Furnished / Hall / Other
     property_status = models.CharField(max_length=50, null=True, blank=True)
 
     # Video Link
     video_link = models.URLField(max_length=500, null=True, blank=True)
+
+    # bank installment
+    installment = models.BooleanField(default=False)
+    co_brokerage = models.BooleanField(
+        default=False,
+        verbose_name="Co-brokerage",
+        help_text="Enable if another agent is involved and a fee must be shared.",
+    )
 
     # Amenities (Many to Many)
     amenities = models.ManyToManyField(Amenity, blank=True)

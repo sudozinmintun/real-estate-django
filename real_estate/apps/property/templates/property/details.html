@@ -3,242 +3,240 @@
 {% block contents %}
 
 <div class="container">
-    <div class="card shadow-sm border rounded-4">
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start mb-3">
-                <div>
-                    <h4 class="fw-semibold mb-1">
-                        {{ property.title }}
-                    </h4>
+    <div class="">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h4 class="fw-semibold mb-1">
+                    {{ property.title }}
+                </h4>
 
-                    <div class="small text-muted py-2">
-                        <i class="bi bi-clock me-1"></i>
-                        Posted {{ property.created_at|timesince }} ago
+                <div class="small text-muted py-2">
+                    <i class="bi bi-clock me-1"></i>
+                    Posted {{ property.created_at|timesince }} ago
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row g-3 mb-3">
+
+            <!-- Floor -->
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center p-2 bg-light rounded">
+                    <i class="bi bi-building text-primary me-2"></i>
+                    <div class="small">
+                        <div class="text-muted">Floor</div>
+                        <strong>{{ property.floor|default_if_none:"0" }}</strong>
                     </div>
                 </div>
             </div>
 
-            <hr>
-
-            <div class="row g-3 mb-3">
-
-                <!-- Floor -->
-                <div class="col-6 col-md-2">
-                    <div class="d-flex align-items-center p-2 bg-light rounded">
-                        <i class="bi bi-building text-primary me-2"></i>
-                        <div class="small">
-                            <div class="text-muted">Floor</div>
-                            <strong>{{ property.floor|default_if_none:"0" }}</strong>
-                        </div>
+            <!-- Bedrooms -->
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center p-2 bg-light rounded">
+                    <i class="bi bi-door-closed text-primary me-2"></i>
+                    <div class="small">
+                        <div class="text-muted">Bedrooms</div>
+                        <strong>{{ property.bedroom|default_if_none:"0" }}</strong>
                     </div>
                 </div>
-
-                <!-- Bedrooms -->
-                <div class="col-6 col-md-2">
-                    <div class="d-flex align-items-center p-2 bg-light rounded">
-                        <i class="bi bi-door-closed text-primary me-2"></i>
-                        <div class="small">
-                            <div class="text-muted">Bedrooms</div>
-                            <strong>{{ property.bedroom|default_if_none:"0" }}</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bathrooms -->
-                <div class="col-6 col-md-2">
-                    <div class="d-flex align-items-center p-2 bg-light rounded">
-                        <i class="bi bi-droplet text-info me-2"></i>
-                        <div class="small">
-                            <div class="text-muted">Bathrooms</div>
-                            <strong>{{ property.bathroom|default_if_none:"0" }}</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Area -->
-                <div class="col-6 col-md-2">
-                    <div class="d-flex align-items-center p-2 bg-light rounded">
-                        <i class="bi bi-aspect-ratio text-success me-2"></i>
-                        <div class="small">
-                            <div class="text-muted">Area</div>
-                            <strong>{{ property.area }} {{ property.area_unit }}</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Type -->
-                <div class="col-6 col-md-2">
-                    <div class="d-flex align-items-center p-2 bg-light rounded">
-                        <i class="bi bi-tag text-info me-2"></i>
-                        <div class="small">
-                            <div class="text-muted">Type</div>
-                            <strong>{{ property.property_type.name }}</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Status -->
-                <div class="col-6 col-md-2">
-                    <div class="d-flex align-items-center p-2 bg-light rounded">
-                        <i class="bi bi-check-circle text-primary me-2"></i>
-                        <div class="small">
-                            <div class="text-muted">Status</div>
-                            <strong>{{ property.property_status }}</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Country -->
-                <div class="col-6 col-md-2">
-                    <div class="d-flex align-items-center p-2 bg-light rounded">
-                        <i class="bi bi-globe text-primary me-2"></i>
-                        <div class="small">
-                            <div class="text-muted">Country</div>
-                            <strong>{{ property.country.name }}</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- City -->
-                <div class="col-6 col-md-2">
-                    <div class="d-flex align-items-center p-2 bg-light rounded">
-                        <i class="bi bi-geo-alt text-primary me-2"></i>
-                        <div class="small">
-                            <div class="text-muted">City</div>
-                            <strong>{{ property.city.name }}</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Township -->
-                <div class="col-6 col-md-2">
-                    <div class="d-flex align-items-center p-2 bg-light rounded">
-                        <i class="bi bi-map text-primary me-2"></i>
-                        <div class="small">
-                            <div class="text-muted">Township</div>
-                            <strong>{{ property.township.name }}</strong>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Purpose -->
-                <div class="col-6 col-md-2">
-                    <div class="d-flex align-items-center p-2 bg-light rounded">
-                        <i class="bi bi-flag text-primary me-2"></i>
-                        <div class="small">
-                            <div class="text-muted">Purpose</div>
-                            {% if property.purpose == "sale" %}
-                            <span class="badge bg-primary">For Sale</span>
-                            {% else %}
-                            <span class="badge bg-info">For Rent</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Price -->
-                <div class="col-6 col-md-4">
-                    <div class="d-flex align-items-center p-2 bg-light rounded">
-                        <i class="bi bi-cash-coin text-success me-2"></i>
-                        <div class="small">
-                            <div class="text-muted">Price</div>
-                            <strong>{{ property.price }} {{ property.currency.code }}</strong>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
-            <hr>
-
-            {% if property.description %}
-            <div class="mb-3">
-                <h6 class="fw-semibold mb-2">
-                    <i class="bi bi-file-text me-1 text-secondary"></i>
-                    Description
-                </h6>
-                <p class="text-muted mb-0 small pt-1">
-                    {{ property.description|linebreaks }}
-                </p>
-            </div>
-            {% endif %}
-
-            {% if property.video_link %}
-            <a href="{{ property.video_link }}" class="mb-0 small pt-1">
-                {{ property.video_link }}
-            </a>
-            {% endif %}
-
-            {% if property.amenities.all %}
-            <div class="mt-4 p-3 border rounded bg-light">
-                <div class="d-flex align-items-center mb-2">
-                    <i class="bi bi-grid-3x3-gap text-primary me-2"></i>
-                    <h6 class="fw-semibold mb-0">Amenities & Facilities</h6>
-                </div>
-
-                <div class="row mt-2">
-                    {% for amenity in property.amenities.all %}
-                    <div class="col-6 col-md-4 col-lg-3 mb-2">
-                        <div class="d-flex align-items-center small">
-                            <i class="bi bi-check-circle-fill text-success me-2"></i>
-                            <span>{{ amenity.name }}</span>
-                        </div>
+            <!-- Bathrooms -->
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center p-2 bg-light rounded">
+                    <i class="bi bi-droplet text-info me-2"></i>
+                    <div class="small">
+                        <div class="text-muted">Bathrooms</div>
+                        <strong>{{ property.bathroom|default_if_none:"0" }}</strong>
                     </div>
-                    {% empty %}
-                    <div class="text-muted small">No amenities added.</div>
-                    {% endfor %}
                 </div>
             </div>
-            {% endif %}
 
-            <!-- Owner / Contact -->
-            <div class="mt-4">
-                <h6 class="fw-semibold mb-2">Owner</h6>
-
-                <div class="small text-muted mb-3">
-                    {{ property.owner.name }}
-                    {% if property.owner.phone %}
-                    ({{property.owner.phone}})
-                    {% endif %}
+            <!-- Area -->
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center p-2 bg-light rounded">
+                    <i class="bi bi-aspect-ratio text-success me-2"></i>
+                    <div class="small">
+                        <div class="text-muted">Area</div>
+                        <strong>{{ property.area }} {{ property.area_unit }}</strong>
+                    </div>
                 </div>
+            </div>
 
-                <div class="d-flex flex-wrap gap-2">
+            <!-- Type -->
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center p-2 bg-light rounded">
+                    <i class="bi bi-tag text-info me-2"></i>
+                    <div class="small">
+                        <div class="text-muted">Type</div>
+                        <strong>{{ property.property_type.name }}</strong>
+                    </div>
+                </div>
+            </div>
 
-                    {% if property.owner.phone %}
-                    <a href="tel:{{ property.owner.phone }}" class="btn btn-warning text-dark fw-semibold">
-                        <i class="bi bi-telephone me-1"></i>
-                        Call Owner
-                    </a>
-                    {% endif %}
+            <!-- Status -->
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center p-2 bg-light rounded">
+                    <i class="bi bi-check-circle text-primary me-2"></i>
+                    <div class="small">
+                        <div class="text-muted">Status</div>
+                        <strong>{{ property.property_status }}</strong>
+                    </div>
+                </div>
+            </div>
 
-                    <a href="{% url 'property:edit' property.id %}" hx-get="{% url 'property:edit' property.id %}"
-                        hx-target="#content" hx-push-url="true" class="btn btn-outline-primary">
-                        <i class="bi bi-pencil-square me-1"></i>
-                        Edit
-                    </a>
+            <!-- Country -->
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center p-2 bg-light rounded">
+                    <i class="bi bi-globe text-primary me-2"></i>
+                    <div class="small">
+                        <div class="text-muted">Country</div>
+                        <strong>{{ property.country.name }}</strong>
+                    </div>
+                </div>
+            </div>
 
-                    <a href="{% url 'property:delete' property.id %}" hx-get="{% url 'property:delete' property.id %}"
-                        hx-target="#content" hx-push-url="true" title="Delete Property" class="btn btn-outline-danger">
-                        <i class="bi bi-trash me-1"></i>
-                        Delete
-                    </a>
+            <!-- City -->
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center p-2 bg-light rounded">
+                    <i class="bi bi-geo-alt text-primary me-2"></i>
+                    <div class="small">
+                        <div class="text-muted">City</div>
+                        <strong>{{ property.city.name }}</strong>
+                    </div>
+                </div>
+            </div>
 
-                    <button class="btn btn-outline-success"
-                        onclick="navigator.share && navigator.share({url: window.location.href});">
-                        <i class="bi bi-share me-1"></i>
-                        Share
-                    </button>
+            <!-- Township -->
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center p-2 bg-light rounded">
+                    <i class="bi bi-map text-primary me-2"></i>
+                    <div class="small">
+                        <div class="text-muted">Township</div>
+                        <strong>{{ property.township.name }}</strong>
+                    </div>
+                </div>
+            </div>
 
-                    <a href="{% url 'property:properties' %}" hx-get="{% url 'property:properties' %}"
-                        hx-target="#content" hx-push-url="true" class="btn btn-light border">
-                        <i class="bi bi-arrow-left me-1"></i>
-                        Back
-                    </a>
+            <!-- Purpose -->
+            <div class="col-6 col-md-2">
+                <div class="d-flex align-items-center p-2 bg-light rounded">
+                    <i class="bi bi-flag text-primary me-2"></i>
+                    <div class="small">
+                        <div class="text-muted">Purpose</div>
+                        {% if property.purpose == "sale" %}
+                        <span class="badge bg-primary">For Sale</span>
+                        {% else %}
+                        <span class="badge bg-info">For Rent</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
 
+            <!-- Price -->
+            <div class="col-6 col-md-4">
+                <div class="d-flex align-items-center p-2 bg-light rounded">
+                    <i class="bi bi-cash-coin text-success me-2"></i>
+                    <div class="small">
+                        <div class="text-muted">Price</div>
+                        <strong>{{ property.price }} {{ property.currency.code }}</strong>
+                    </div>
                 </div>
             </div>
 
         </div>
+
+        <hr>
+
+        {% if property.description %}
+        <div class="mb-3">
+            <h6 class="fw-semibold mb-2">
+                <i class="bi bi-file-text me-1 text-secondary"></i>
+                Description
+            </h6>
+            <p class="text-muted mb-0 small pt-1">
+                {{ property.description|linebreaks }}
+            </p>
+        </div>
+        {% endif %}
+
+        {% if property.video_link %}
+        <a href="{{ property.video_link }}" class="mb-0 small pt-1" target="_blank">
+            {{ property.video_link }}
+        </a>
+        {% endif %}
+
+        {% if property.amenities.all %}
+        <div class="mt-4 p-3 border rounded bg-light">
+            <div class="d-flex align-items-center mb-2">
+                <i class="bi bi-grid-3x3-gap text-primary me-2"></i>
+                <h6 class="fw-semibold mb-0">Amenities & Facilities</h6>
+            </div>
+
+            <div class="row mt-2">
+                {% for amenity in property.amenities.all %}
+                <div class="col-6 col-md-4 col-lg-3 mb-2">
+                    <div class="d-flex align-items-center small">
+                        <i class="bi bi-check-circle-fill text-success me-2"></i>
+                        <span>{{ amenity.name }}</span>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="text-muted small">No amenities added.</div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Owner / Contact -->
+        <div class="mt-4">
+            <h6 class="fw-semibold mb-2">Owner</h6>
+
+            <div class="small text-muted mb-3">
+                {{ property.owner.name }}
+                {% if property.owner.phone %}
+                ({{property.owner.phone}})
+                {% endif %}
+            </div>
+
+            <div class="d-flex flex-wrap gap-2">
+
+                {% if property.owner.phone %}
+                <a href="tel:{{ property.owner.phone }}" class="btn btn-warning text-dark fw-semibold">
+                    <i class="bi bi-telephone me-1"></i>
+                    Call Owner
+                </a>
+                {% endif %}
+
+                <a href="{% url 'property:edit' property.id %}" hx-get="{% url 'property:edit' property.id %}"
+                    hx-target="#content" hx-push-url="true" class="btn btn-outline-primary">
+                    <i class="bi bi-pencil-square me-1"></i>
+                    Edit
+                </a>
+
+                <a href="{% url 'property:delete' property.id %}" hx-get="{% url 'property:delete' property.id %}"
+                    hx-target="#content" hx-push-url="true" title="Delete Property" class="btn btn-outline-danger">
+                    <i class="bi bi-trash me-1"></i>
+                    Delete
+                </a>
+
+                <button class="btn btn-outline-success"
+                    onclick="navigator.share && navigator.share({url: window.location.href});">
+                    <i class="bi bi-share me-1"></i>
+                    Share
+                </button>
+
+                <a href="{% url 'property:properties' %}" hx-get="{% url 'property:properties' %}" hx-target="#content"
+                    hx-push-url="true" class="btn btn-light border">
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Back
+                </a>
+
+            </div>
+        </div>
+
     </div>
 </div>
 

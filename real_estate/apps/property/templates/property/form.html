@@ -57,7 +57,6 @@
                 </div>
             </div>
 
-
             <!-- Country -->
             <div class="col-md-3">
                 <div class="form-floating">
@@ -85,17 +84,6 @@
                     <label>Township</label>
                     <div class="text-danger small">
                         {{ form.township.errors|striptags }}
-                    </div>
-                </div>
-            </div>
-
-            <!-- Purpose -->
-            <div class="col-md-3">
-                <div class="form-floating">
-                    {{ form.purpose }}
-                    <label>Purpose</label>
-                    <div class="text-danger small">
-                        {{ form.purpose.errors|striptags }}
                     </div>
                 </div>
             </div>
@@ -140,6 +128,33 @@
                 </div>
             </div>
 
+            <!-- Property Status -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.property_status }}
+                    <label>Property Status</label>
+                </div>
+            </div>
+
+            <!-- Video Link -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.video_link }}
+                    <label>Video or External Ad Link</label>
+                </div>
+            </div>
+
+            <!-- Purpose -->
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.purpose }}
+                    <label>Purpose</label>
+                    <div class="text-danger small">
+                        {{ form.purpose.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
             <!-- Price -->
             <div class="col-md-3">
                 <div class="form-floating">
@@ -161,31 +176,70 @@
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Property Status -->
-            <div class="col-md-3">
+        <div class="row g-4 pt-4">
+
+            <!-- Rent Frequency (only for rent) -->
+            <div class="col-md-3 d-none rent-field">
                 <div class="form-floating">
-                    {{ form.property_status }}
-                    <label>Property Status</label>
+                    {{ form.price_frequency }}
+                    <label>Rent Frequency</label>
+                    <div class="text-danger small">{{ form.price_frequency.errors|striptags }}</div>
                 </div>
             </div>
 
-            <!-- Video Link -->
-            <div class="col-md-3">
+            <!-- Contract Duration (only for rent) -->
+            <div class="col-md-3 d-none rent-field">
                 <div class="form-floating">
-                    {{ form.video_link }}
-                    <label>Video or External Ad Link</label>
+                    {{ form.contract_duration }}
+                    <label>Contract Duration</label>
+                    <div class="text-danger small">{{ form.contract_duration.errors|striptags }}</div>
                 </div>
             </div>
 
-            <!-- Description -->
+            <!-- Bank Installment (only for sale) -->
+            <div class="col-md-3 d-none sale-field">
+                <div class="form-check mt-4">
+                    {{ form.installment }}
+                    <label class="form-check-label" for="{{ form.installment.id_for_label }}">
+                        Bank Installment available
+                    </label>
+                    <div class="text-danger small">{{ form.installment.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Co-brokerage (always visible) -->
+            <div class="col-md-3">
+                <div class="form-check mt-4">
+                    {{ form.co_brokerage }}
+                    <label class="form-check-label" for="{{ form.co_brokerage.id_for_label }}">
+                        {{ form.co_brokerage.label }}
+                    </label>
+                    <br>
+                    {% if form.co_brokerage.help_text %}
+                    <small class="form-text text-muted">
+                        {{ form.co_brokerage.help_text }}<br>
+                        <span class="text-danger">
+                            အခြားအေးဂျင့်ဖြင့် ချိတ်ဆက်ထားပါက အခကြေးငွေ ခွဲဝေပေးရပါမည်။
+                        </span>
+                    </small>
+                    {% endif %}
+                    <div class="text-danger small">{{ form.co_brokerage.errors|striptags }}</div>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="row g-4 pt-4">
             <div class="col-md-12">
                 <div class="form-floating">
                     {{ form.description }}
                     <label>Description</label>
                 </div>
             </div>
-
         </div>
 
         <div class="add_property_info add_property_aminities mt-5">

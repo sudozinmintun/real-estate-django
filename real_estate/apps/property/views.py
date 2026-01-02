@@ -111,7 +111,7 @@ def create(request):
             form.save_m2m()
 
             messages.success(request, "Property created successfully!")
-            return redirect("property:backend_create")
+            return redirect("property:properties")
 
     return render(request, "property/form.html", {"form": form})
 

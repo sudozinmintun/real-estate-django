@@ -15,7 +15,7 @@
 
 
 <div class="table-responsive">
-    <table class="table table-hover align-middle">
+    <table class="table table-hover align-middle text-nowrap">
         <thead class="table-light">
             <tr class="fw-semibold">
                 <th class="small text-muted">#</th>
@@ -23,7 +23,8 @@
                 <th class="small text-muted">Phone</th>
                 <th class="small text-muted">Email</th>
                 <th class="small text-muted">Address</th>
-                <th class="small text-muted">Created At</th>
+                <th class="small text-muted">Date Joined</th>
+                <th class="small text-muted">Notes</th>
                 <th class="small text-muted">Actions</th>
             </tr>
         </thead>
@@ -32,19 +33,26 @@
             {% for owner in owners %}
             <tr>
                 <td>{{ forloop.counter }}</td>
+
                 <td>{{ owner.name }}</td>
-                <td>{{ owner.phone }}</td>
-                <td>{{ owner.email }}</td>
-                <td>{{ owner.address }}</td>
+
+                <td>{{ owner.phone|default_if_none:""|default:"" }}</td>
+
+                <td>{{ owner.email|default_if_none:""|default:"" }}</td>
+
+                <td>{{ owner.address|default_if_none:""|default:"" }}</td>
+
                 <td>{{ owner.created_at|date:"Y-m-d" }}</td>
+
+                <td>{{ owner.notes|default_if_none:""|default:"" }}</td>
                 <td>
                     <a hx-get="{% url 'owners:edit' owner.id %}" hx-target="#content" hx-push-url="true"
-                        class="btn btn-sm text-primary">
+                        class="btn btn-sm text-primary fw-semibold">
                         Edit
                     </a>
 
                     <a hx-get="{% url 'owners:delete' owner.id %}" hx-target="#content" hx-push-url="true"
-                        class="btn btn-sm text-danger">
+                        class="btn btn-sm text-danger fw-semibold">
                         Delete
                     </a>
                 </td>

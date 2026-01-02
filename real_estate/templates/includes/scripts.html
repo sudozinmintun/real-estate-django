@@ -107,3 +107,32 @@
         }
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        function toggleFields() {
+            const purpose = $('#id_purpose').val();
+
+            // Rent fields
+            if (purpose === 'rent') {
+                $('.rent-field').removeClass('d-none');
+            } else {
+                $('.rent-field').addClass('d-none');
+                $('.rent-field').find('input, select, textarea').val('').prop('checked', false);
+            }
+
+            // Sale fields
+            if (purpose === 'sale') {
+                $('.sale-field').removeClass('d-none');
+            } else {
+                $('.sale-field').addClass('d-none');
+                $('.sale-field').find('input, select, textarea').val('').prop('checked', false);
+            }
+
+            // co_brokerage → always visible
+        }
+
+        toggleFields();
+        $('#id_purpose').on('change', toggleFields);
+    });
+</script>

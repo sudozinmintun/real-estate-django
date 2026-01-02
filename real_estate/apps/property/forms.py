@@ -32,6 +32,7 @@ class PropertyAdminForm(forms.ModelForm):
 
         return cleaned_data
 
+
 PROPERTY_STATUS_CHOICES = [
     ("", "Select Status"),
     ("Fully Furnished", "Fully Furnished"),
@@ -42,6 +43,12 @@ PROPERTY_STATUS_CHOICES = [
     ("Move-in Ready", "Move-in Ready"),
     ("Pre-Owned", "Pre-Owned"),
 ]
+
+PRICE_FREQUENCY_CHOICES = (
+    ("", "--Select--"),
+    ("monthly", "Per month"),
+    ("yearly", "Per year"),
+)
 
 
 class OwnerChoiceField(forms.ModelChoiceField):
@@ -61,6 +68,12 @@ class PropertyForm(forms.ModelForm):
 
     property_status = forms.ChoiceField(
         choices=PROPERTY_STATUS_CHOICES,
+        widget=forms.Select(attrs={"class": "form-control select_2"}),
+        required=False,
+    )
+
+    price_frequency = forms.ChoiceField(
+        choices=PRICE_FREQUENCY_CHOICES,
         widget=forms.Select(attrs={"class": "form-control select_2"}),
         required=False,
     )
@@ -96,12 +109,16 @@ class PropertyForm(forms.ModelForm):
             "purpose",
             "price",
             "currency",
+            "price_frequency",
+            "contract_duration",
             "property_status",
             "video_link",
             "description",
             "floor",
             "bedroom",
             "bathroom",
+            "installment",
+            "co_brokerage",
             "owner",
             "amenities",
         ]
@@ -123,6 +140,9 @@ class PropertyForm(forms.ModelForm):
                 attrs={"class": "form-control", "placeholder": "Price"}
             ),
             "currency": forms.Select(attrs={"class": "form-control select_2"}),
+            "contract_duration": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Contract Duration"}
+            ),
             "floor": forms.TextInput(
                 attrs={
                     "class": "form-control",
@@ -141,6 +161,8 @@ class PropertyForm(forms.ModelForm):
             "description": forms.Textarea(
                 attrs={"class": "form-control summer_note", "rows": 10}
             ),
+            "installment": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            "co_brokerage": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
 
     def __init__(self, *args, company=None, **kwargs):

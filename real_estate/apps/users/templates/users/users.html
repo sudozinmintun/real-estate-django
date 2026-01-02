@@ -8,8 +8,8 @@
     </div>
 
     <a href="{% url 'users:create' %}" hx-get="{% url 'users:create' %}" hx-target="#content" hx-push-url="true"
-        class="btn btn-primary rounded-pill px-3">
-        <i class="bi bi-plus-lg me-1"></i> Add Account
+        class="btn btn-primary rounded-pill">
+        Add Account
     </a>
 </div>
 
@@ -19,10 +19,11 @@
         <thead class="table-light">
             <tr class="fw-semibold">
                 <th class="small text-muted">#</th>
-                <th class="small text-muted">Name</th>
+                <th class="small text-muted">Full Name</th>
                 <th class="small text-muted">Email</th>
                 <th class="small text-muted">Account Type</th>
                 <th class="small text-muted">Date Joined</th>
+                <th class="small text-muted">Created By</th>
                 <th class="small text-muted">Actions</th>
             </tr>
         </thead>
@@ -33,23 +34,35 @@
                 <td>{{ forloop.counter }}</td>
                 <td>{{ user.get_full_name|default:user.username }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.profile.user_type }}</td>
+                <td>
+                    <span class="badge bg-primary">
+                        {{ user.profile.user_type }}
+                    </span>
+                </td>
                 <td>{{ user.date_joined|date:"Y-m-d" }}</td>
                 <td>
+                    {% if user.profile.created_by %}
+                    {{ user.profile.created_by.get_full_name }}
+                    {% else %}
+                    Self-registered
+                    {% endif %}
+                </td>
+                <td>
                     <a href="{% url 'users:edit' user.id %}" hx-get="{% url 'users:edit' user.id %}"
-                        hx-target="#content" hx-push-url="true" class="btn btn-sm text-primary">
+                        hx-target="#content" hx-push-url="true" class="btn btn-sm text-primary fw-semibold">
                         Edit
                     </a>
+
                     <a href="{% url 'users:delete' user.id %}" hx-get="{% url 'users:delete' user.id %}"
-                        hx-target="#content" hx-push-url="true" class="btn btn-sm text-danger">
+                        hx-target="#content" hx-push-url="true" class="btn btn-sm text-danger fw-semibold">
                         Delete
                     </a>
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="6" class="text-center text-muted">
-                    No users found for this company.
+                <td colspan="7" class="text-center text-muted py-4">
+                    No users found. Try adjusting your filters or add a new user.
                 </td>
             </tr>
             {% endfor %}

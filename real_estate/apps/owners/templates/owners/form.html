@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Create User{% endblock %}
+{% block title %}Owner Form{% endblock %}
 {% block contents %}
 
 <div class="drive-header">Owner Details</div>
@@ -41,8 +41,8 @@
                         {{ form.email.errors|striptags }}
                     </div>
                 </div>
-
             </div>
+
             <div class="col-md-6">
                 <!-- Address -->
                 <div class="form-floating mb-2">
@@ -51,6 +51,17 @@
 
                     <div class="text-danger small mt-1">
                         {{ form.address.errors|striptags }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-floating mb-2">
+                    {{ form.notes }}
+                    <label for="{{ form.notes.id_for_label }}">Notes</label>
+
+                    <div class="text-danger small mt-1">
+                        {{ form.notes.errors|striptags }}
                     </div>
                 </div>
             </div>
