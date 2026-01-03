@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block title %}Buyer Form{% endblock %}
+{% block contents %}
+
+<div class="drive-header">Buyer Form</div>
+
+<div class="container p-0">
+    <form hx-post="" hx-target="#content" hx-select="#content" hx-swap="innerHTML" autocomplete="off" novalidate>
+        {% csrf_token %}
+
+        <div class="row g-4">
+
+            <!-- Name -->
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.name }}
+                    <label for="{{ form.name.id_for_label }}">Name</label>
+                    <div class="text-danger small mt-1">{{ form.name.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.phone }}
+                    <label for="{{ form.phone.id_for_label }}">Phone</label>
+                    <div class="text-danger small mt-1">{{ form.phone.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.email }}
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    <div class="text-danger small mt-1">{{ form.email.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.address }}
+                    <label for="{{ form.address.id_for_label }}">Address</label>
+                    <div class="text-danger small mt-1">{{ form.address.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Status -->
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.status }}
+                    <label for="{{ form.status.id_for_label }}">Status</label>
+                    <div class="text-danger small mt-1">{{ form.status.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Source -->
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.source }}
+                    <label for="{{ form.source.id_for_label }}">Lead Source</label>
+                    <div class="text-danger small mt-1">{{ form.source.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Probability -->
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.deal_probability }}
+                    <label for="{{ form.deal_probability.id_for_label }}">Deal Probability (%)</label>
+                    <div class="text-danger small mt-1">{{ form.deal_probability.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Budgets -->
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.budget_min }}
+                    <label for="{{ form.budget_min.id_for_label }}">Budget Min</label>
+                    <div class="text-danger small mt-1">{{ form.budget_min.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.budget_max }}
+                    <label for="{{ form.budget_max.id_for_label }}">Budget Max</label>
+                    <div class="text-danger small mt-1">{{ form.budget_max.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Preferences -->
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.preferred_location }}
+                    <label for="{{ form.preferred_location.id_for_label }}">Preferred Location</label>
+                    <div class="text-danger small mt-1">{{ form.preferred_location.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.preferred_type }}
+                    <label for="{{ form.preferred_type.id_for_label }}">Preferred Property Type</label>
+                    <div class="text-danger small mt-1">{{ form.preferred_type.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Assigned To -->
+            <div class="col-md-4">
+                <div class="form-floating mb-3">
+                    {{ form.assigned_to }}
+                    <label for="{{ form.assigned_to.id_for_label }}">Assigned To</label>
+                    <div class="text-danger small mt-1">{{ form.assigned_to.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="col-md-12">
+                <div class="form-floating mb-2">
+                    {{ form.notes }}
+                    <label for="{{ form.notes.id_for_label }}">Notes</label>
+                    <div class="text-danger small mt-1">{{ form.notes.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="col-12 d-flex justify-content-end gap-2 mt-3">
+                <a href="{% url 'buyers:index' %}" hx-get="{% url 'buyers:index' %}" hx-target="#content"
+                    hx-push-url="true" class="btn btn-outline-secondary rounded-pill px-4">
+                    Cancel
+                </a>
+
+                <button class="btn btn-primary rounded-pill px-4 fw-semibold">
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

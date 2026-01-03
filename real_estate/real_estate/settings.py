@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "apps.companies",
     "apps.users",
     "apps.owners",
+    "apps.buyers",
     "apps.country",
     "apps.city",
     "apps.package",

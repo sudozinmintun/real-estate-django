@@ -7,44 +7,58 @@
         <a class="nav-item {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
             href="{% url 'accounts:dashboard' %}" hx-get="{% url 'accounts:dashboard' %}" hx-target="#content"
             hx-push-url="true">
-            <i class="material-icons-outlined">
-                home
-            </i>
+            <i class="material-icons-outlined">home</i>
             Home
         </a>
 
-        <a class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+        <a class="nav-item {% if request.resolver_match.view_name == 'owners:index' %}active{% endif %}"
             href="{% url 'owners:index' %}" hx-get="{% url 'owners:index' %}" hx-target="#content" hx-push-url="true">
-            <i class="material-icons-outlined">
-                people_outline
-            </i>
-            Owners
+            <i class="material-icons-outlined">people</i>
+            Owners / Sellers
         </a>
 
         <a class="nav-item {% if request.resolver_match.url_name == 'properties' %}active{% endif %}"
             href="{% url 'property:properties' %}" hx-get="{% url 'property:properties' %}" hx-target="#content"
             hx-push-url="true">
-            <i class="material-icons-outlined">
-                people_outline
-            </i>
+            <i class="material-icons-outlined">real_estate_agent</i>
             Manage Properties
         </a>
 
+        <a class="nav-item {% if request.resolver_match.view_name == 'buyers:index' %}active{% endif %}"
+            href="{% url 'buyers:index' %}" hx-get="{% url 'buyers:index' %}" hx-target="#content" hx-push-url="true">
+            <i class="material-icons-outlined">person_search</i>
+            Buyers / Clients
+        </a>
+
+        <!-- <a class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+            href="{% url 'owners:index' %}" hx-get="{% url 'owners:index' %}" hx-target="#content" hx-push-url="true">
+            <i class="material-icons-outlined">gavel</i>
+            Lawyers
+        </a>
+
+        <a class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+            href="{% url 'owners:index' %}" hx-get="{% url 'owners:index' %}" hx-target="#content" hx-push-url="true">
+            <i class="material-icons-outlined">payments</i>
+            Payment Plans
+        </a>
+
+        <a class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+            href="{% url 'owners:index' %}" hx-get="{% url 'owners:index' %}" hx-target="#content" hx-push-url="true">
+            <i class="material-icons-outlined">description</i>
+            Contracts
+        </a> -->
+
         <a class="nav-item {% if request.resolver_match.url_name == 'users' %}active{% endif %}"
             href="{% url 'users:users' %}" hx-get="{% url 'users:users' %}" hx-target="#content" hx-push-url="true">
-            <i class="material-icons-outlined">
-                people_outline
-            </i>
+            <i class="material-icons-outlined">group</i>
             Users
         </a>
 
-
         <a class="nav-item" href="{% url 'accounts:logout' %}" hx-get="{% url 'accounts:logout' %}" hx-target="#content"
             hx-push-url="true">
-            <i class="material-icons-outlined">
-                logout
-            </i>
+            <i class="material-icons-outlined">logout</i>
             Logout
         </a>
     </nav>
+
 </aside>
