@@ -27,7 +27,7 @@
                     <i class="bi bi-building text-primary me-2"></i>
                     <div class="small">
                         <div class="text-muted">Floor</div>
-                        <strong>{{ property.floor|default_if_none:"0" }}</strong>
+                        <strong>{{ property.floor|default:"-" }}</strong>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                     <i class="bi bi-door-closed text-primary me-2"></i>
                     <div class="small">
                         <div class="text-muted">Bedrooms</div>
-                        <strong>{{ property.bedroom|default_if_none:"0" }}</strong>
+                        <strong>{{ property.bedroom|default:"-" }}</strong>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                     <i class="bi bi-droplet text-info me-2"></i>
                     <div class="small">
                         <div class="text-muted">Bathrooms</div>
-                        <strong>{{ property.bathroom|default_if_none:"0" }}</strong>
+                        <strong>{{ property.bathroom|default:"-" }}</strong>
                     </div>
                 </div>
             </div>
@@ -60,7 +60,9 @@
                     <i class="bi bi-aspect-ratio text-success me-2"></i>
                     <div class="small">
                         <div class="text-muted">Area</div>
-                        <strong>{{ property.area }} {{ property.area_unit }}</strong>
+                        <strong>
+                            {{ property.area|default:"-" }} {{ property.area_unit|default:"-" }}
+                        </strong>
                     </div>
                 </div>
             </div>
@@ -71,7 +73,7 @@
                     <i class="bi bi-tag text-info me-2"></i>
                     <div class="small">
                         <div class="text-muted">Type</div>
-                        <strong>{{ property.property_type.name }}</strong>
+                        <strong>{{ property.property_type.name|default:"-" }}</strong>
                     </div>
                 </div>
             </div>
@@ -82,7 +84,7 @@
                     <i class="bi bi-check-circle text-primary me-2"></i>
                     <div class="small">
                         <div class="text-muted">Status</div>
-                        <strong>{{ property.property_status }}</strong>
+                        <strong>{{ property.property_status|default:"-" }}</strong>
                     </div>
                 </div>
             </div>
@@ -93,7 +95,7 @@
                     <i class="bi bi-globe text-primary me-2"></i>
                     <div class="small">
                         <div class="text-muted">Country</div>
-                        <strong>{{ property.country.name }}</strong>
+                        <strong>{{ property.country.name|default:"-" }}</strong>
                     </div>
                 </div>
             </div>
@@ -104,7 +106,7 @@
                     <i class="bi bi-geo-alt text-primary me-2"></i>
                     <div class="small">
                         <div class="text-muted">City</div>
-                        <strong>{{ property.city.name }}</strong>
+                        <strong>{{ property.city.name|default:"-" }}</strong>
                     </div>
                 </div>
             </div>
@@ -115,7 +117,7 @@
                     <i class="bi bi-map text-primary me-2"></i>
                     <div class="small">
                         <div class="text-muted">Township</div>
-                        <strong>{{ property.township.name }}</strong>
+                        <strong>{{ property.township.name|default:"-" }}</strong>
                     </div>
                 </div>
             </div>
@@ -128,8 +130,10 @@
                         <div class="text-muted">Purpose</div>
                         {% if property.purpose == "sale" %}
                         <span class="badge bg-primary">For Sale</span>
-                        {% else %}
+                        {% elif property.purpose == "rent" %}
                         <span class="badge bg-info">For Rent</span>
+                        {% else %}
+                        <span class="badge bg-secondary">-</span>
                         {% endif %}
                     </div>
                 </div>
@@ -141,9 +145,51 @@
                     <i class="bi bi-cash-coin text-success me-2"></i>
                     <div class="small">
                         <div class="text-muted">Price</div>
-                        <strong>{{ property.price }} {{ property.currency.code }}</strong>
+                        <strong>
+                            {{ property.price|default:"-" }} {{ property.currency.code|default:"-" }}
+                        </strong>
+                        {% if property.purpose == "rent" %}
+                        {% if property.price_frequency == "monthly" %}
+                        Per month
+                        {% elif property.price_frequency == "yearly" %}
+                        Per year
+                        {% else %}
+                        -
+                        {% endif %}
+                        | Contract: {{ property.contract_duration|default:"-" }}
+                        {% endif %}
                     </div>
                 </div>
+            </div>
+
+
+        </div>
+
+        <hr>
+
+        <div class="mb-3 row">
+            <!-- Installment -->
+            {% if property.purpose == "sale" %}
+            <div class="col-6 col-md-3 d-flex align-items-center">
+                <i class="bi bi-cash-stack text-primary me-2 fs-5"></i>
+                <span class="text-muted me-2">Installment available:</span>
+                {% if property.installment == "true" %}
+                <span class="badge bg-success">Yes</span>
+                {% else %}
+                <span class="badge bg-secondary">No</span>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Co-Brokerage -->
+            <div class="col-6 col-md-3 d-flex align-items-center">
+                <i class="bi bi-people text-primary me-2 fs-5"></i>
+                <span class="text-muted me-2">Co-Brokerage:</span>
+                {% if property.co_brokerage == "true" %}
+                <span class="badge bg-success">Yes</span>
+                {% else %}
+                <span class="badge bg-secondary">No</span>
+                {% endif %}
             </div>
 
         </div>
