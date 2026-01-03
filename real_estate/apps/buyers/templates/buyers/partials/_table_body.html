@@ -1,0 +1,107 @@
+{% for buyer in buyers %}
+<tr id="buyer-{{ buyer.id }}" class="buyer-table">
+    <td>{{ forloop.counter }}</td>
+
+    <td>
+        <button class="btn btn-sm btn-outline-primary" hx-get="{% url 'buyers:list_logs' buyer.id %}"
+            hx-target="#modal-body" hx-trigger="click" hx-swap="innerHTML" data-bs-toggle="modal"
+            data-bs-target="#communicationsModal">
+            Communications
+        </button>
+    </td>
+
+    <td>{{ buyer.name }}</td>
+
+    <td>{{ buyer.phone|default:"" }}</td>
+
+    <td>{{ buyer.email|default:"" }}</td>
+
+    <td>{{ buyer.address|default:"" }}</td>
+
+    <td>
+        {% if buyer.status == "new" %}
+        <span class="badge bg-secondary">New</span>
+        {% elif buyer.status == "contacted" %}
+        <span class="badge bg-info text-dark">Contacted</span>
+        {% elif buyer.status == "interested" %}
+        <span class="badge bg-primary">Interested</span>
+        {% elif buyer.status == "negotiating" %}
+        <span class="badge bg-warning text-dark">Negotiating</span>
+        {% elif buyer.status == "closed" %}
+        <span class="badge bg-success">Closed</span>
+        {% elif buyer.status == "lost" %}
+        <span class="badge bg-danger">Lost</span>
+        {% endif %}
+    </td>
+
+    <td>
+        {{ buyer.get_source_display|default:"-" }}
+    </td>
+
+    <td>
+        {% if buyer.deal_probability %}
+        <div class="progress" style="height: 6px;">
+            <div class="progress-bar bg-success" role="progressbar"
+                style="--probability: {{ buyer.deal_probability }}%;" aria-valuenow="{{ buyer.deal_probability }}"
+                aria-valuemin="0" aria-valuemax="100">
+            </div>
+        </div>
+        <small class="text-muted">
+            {{ buyer.deal_probability }}%
+        </small>
+        {% else %}
+        <span class="text-muted">—</span>
+        {% endif %}
+    </td>
+
+    <td>
+        {% if buyer.budget_min or buyer.budget_max %}
+        {{ buyer.budget_min|default:"0" }} —
+        {{ buyer.budget_max|default:"∞" }}
+        {% else %}
+        <span class="text-muted">
+            Not set
+        </span>
+        {% endif %}
+    </td>
+
+    <td>
+        {{buyer.preferred_location}}
+    </td>
+
+    <td>
+        {{buyer.preferred_type}}
+    </td>
+
+    <td>
+        {{ buyer.assigned_to.get_full_name|default:buyer.assigned_to.username|default:"—" }}
+    </td>
+
+    <td>
+        {{ buyer.created_at|date:"Y-m-d" }}
+    </td>
+
+    <td>
+        {{buyer.notes}}
+    </td>
+
+    <td>
+        <a hx-get="{% url 'buyers:edit' buyer.id %}" hx-target="#content" hx-push-url="true"
+            class="btn btn-sm text-primary fw-semibold">
+            Edit
+        </a>
+
+        <a hx-get="{% url 'buyers:delete' buyer.id %}" hx-target="#content" hx-push-url="true"
+            class="btn btn-sm text-danger fw-semibold">
+            Delete
+        </a>
+    </td>
+</tr>
+
+{% empty %}
+<tr>
+    <td colspan="11" class="text-center text-muted py-4">
+        No buyers found for this company.
+    </td>
+</tr>
+{% endfor %}

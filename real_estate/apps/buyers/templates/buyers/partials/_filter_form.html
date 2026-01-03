@@ -1,0 +1,93 @@
+<form id="buyer-filter-form" class="pt-3" hx-get="{% url 'buyers:buyer_list_htmx' %}" hx-target="#buyer-table-body"
+    hx-trigger="change, keyup delay:300ms">
+
+    <!-- Main Filters (Always Visible) -->
+    <div class="row g-2">
+        <!-- Search -->
+        <div class="col-md-3">
+            <input type="text" name="q" class="form-control" placeholder="Search name, email, phone...">
+        </div>
+
+        <!-- Status -->
+        <div class="col-md-3">
+            <select name="status" class="form-select">
+                <option value="">All Status</option>
+                {% for value, label in STATUS_CHOICES %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Source -->
+        <div class="col-md-3">
+            <select name="source" class="form-select">
+                <option value="">All Sources</option>
+                {% for value, label in SOURCE_CHOICES %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <button type="button" class="btn btn-outline-secondary w-100" data-bs-toggle="collapse"
+                data-bs-target="#more-filters" aria-expanded="false" aria-controls="more-filters">
+                More Filters
+            </button>
+        </div>
+    </div>
+
+    <!-- More Filters (Collapsed) -->
+    <div class="collapse mt-2" id="more-filters">
+        <div class="row g-2">
+            <!-- Budget & Preferred Fields -->
+            <div class="col-md-3">
+                <input type="number" name="budget_min" class="form-control" placeholder="Min Budget">
+            </div>
+
+            <div class="col-md-3">
+                <input type="number" name="budget_max" class="form-control" placeholder="Max Budget">
+            </div>
+
+            <div class="col-md-3">
+                <input type="text" name="preferred_location" class="form-control" placeholder="Preferred Location">
+            </div>
+
+            <div class="col-md-3">
+                <input type="text" name="preferred_type" class="form-control" placeholder="Preferred Type">
+            </div>
+
+            <!-- Deal Probability -->
+            <div class="col-md-3">
+                <select name="deal_probability" class="form-select">
+                    <option value="">Any Probability</option>
+                    <option value="0-25">0% - 25%</option>
+                    <option value="25-50">25% - 50%</option>
+                    <option value="50-75">50% - 75%</option>
+                    <option value="75-100">75% - 100%</option>
+                </select>
+            </div>
+
+            <!-- Assigned To -->
+            <div class="col-md-3">
+                <select name="assigned_to" class="form-select">
+                    <option value="">All Assigned Users</option>
+                    {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.get_full_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Notes -->
+            <div class="col-md-3">
+                <input type="text" name="notes" class="form-control" placeholder="Notes">
+            </div>
+
+            <!-- Reset Button -->
+            <div class="col-md-3 d-flex align-items-center">
+                <button type="button" id="reset-buyer-filters" class="btn btn-outline-danger w-100">
+                    Reset Filters
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -7,7 +7,7 @@ from django.contrib import messages
 
 @login_required(login_url="accounts:login")
 def index(request):
-    owners = Owner.objects.filter(company=request.company).select_related("company")
+    owners = Owner.objects.filter(company=request.user.profile.company).select_related("company")
     context = {"owners": owners}
 
     return render(request, "owners/index.html", context)

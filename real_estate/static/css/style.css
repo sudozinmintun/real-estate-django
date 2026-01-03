@@ -166,3 +166,10 @@ aside {
 .hx-progress.active {
     transform: scaleX(1);
 }
+
+
+.progress-bar {
+    width: var(--probability, 0%);
+    background-color: green;
+    height: 20px;
+}

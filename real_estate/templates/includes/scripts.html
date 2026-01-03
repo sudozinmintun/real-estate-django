@@ -105,6 +105,21 @@
             // Trigger HTMX change event manually to re-fetch filtered content
             filterForm.dispatchEvent(new Event('change'));
         }
+
+
+        if (e.target.matches("#reset-buyer-filters")) {
+            const buyerFilterForm = document.getElementById("buyer-filter-form");
+            if (!buyerFilterForm) return;
+
+            // Clear all input fields
+            buyerFilterForm.querySelectorAll("input").forEach(input => input.value = "");
+
+            // Reset all select fields to first option
+            buyerFilterForm.querySelectorAll("select").forEach(select => select.selectedIndex = 0);
+
+            // Trigger HTMX change event manually to re-fetch filtered content
+            buyerFilterForm.dispatchEvent(new Event('change'));
+        }
     });
 </script>
 

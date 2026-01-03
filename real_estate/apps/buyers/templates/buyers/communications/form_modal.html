@@ -1,0 +1,64 @@
+<h6>Add Communication for {{ buyer.name }}</h6>
+<form hx-post="{% url 'buyers:create_log' buyer.id %}" hx-target="#modal-body" hx-swap="innerHTML" autocomplete="off">
+    {% csrf_token %}
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="form-floating mb-3">
+                {{ form.communication_type }}
+                <label for="{{ form.communication_type.id_for_label }}">
+                    Communication Type
+                </label>
+                <div class="text-danger small mt-1">
+                    {{ form.communication_type.errors|striptags }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-floating mb-3">
+                {{ form.reminder_date }}
+                <label for="{{ form.reminder_date.id_for_label }}">
+                    Reminder Date
+                </label>
+                <div class="text-danger small mt-1">
+                    {{ form.reminder_date.errors|striptags }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-floating mb-3">
+                {{ form.reminder_time }}
+                <label for="{{ form.reminder_time.id_for_label }}">
+                    Reminder Time
+                </label>
+                <div class="text-danger small mt-1">
+                    {{ form.reminder_time.errors|striptags }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-floating mb-3">
+                {{ form.content }}
+                <label for="{{ form.reminder_date.id_for_label }}">
+                    Optional details about this communication
+                </label>
+                <div class="text-danger small mt-1">
+                    {{ form.content.errors|striptags }}
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn" hx-get="{% url 'buyers:list_logs' buyer.id %}" hx-target="#modal-body"
+                hx-swap="innerHTML">
+                Back
+            </button>
+
+            <button class="btn btn-primary">
+                Save
+            </button>
+        </div>
+    </div>
+</form>
