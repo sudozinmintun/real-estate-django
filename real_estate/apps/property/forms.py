@@ -121,6 +121,8 @@ class PropertyForm(forms.ModelForm):
             "co_brokerage",
             "owner",
             "amenities",
+            "yearbuilt",
+            "maplink",
         ]
 
         widgets = {
@@ -163,6 +165,12 @@ class PropertyForm(forms.ModelForm):
             ),
             "installment": forms.CheckboxInput(attrs={"class": "form-check-input"}),
             "co_brokerage": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            "yearbuilt": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Year built"}
+            ),
+            "maplink": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Map Link"}
+            ),
         }
 
     def __init__(self, *args, company=None, **kwargs):

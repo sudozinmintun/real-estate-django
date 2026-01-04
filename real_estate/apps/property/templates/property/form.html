@@ -144,6 +144,22 @@
                 </div>
             </div>
 
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.yearbuilt }}
+                    <label>Year built</label>
+                    <div class="text-danger small">{{ form.yearbuilt.errors|striptags }}</div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-floating">
+                    {{ form.maplink }}
+                    <label>Map Link</label>
+                    <div class="text-danger small">{{ form.maplink.errors|striptags }}</div>
+                </div>
+            </div>
+
             <!-- Purpose -->
             <div class="col-md-3">
                 <div class="form-floating">
@@ -166,6 +182,7 @@
                 </div>
             </div>
 
+
             <!-- Currency -->
             <div class="col-md-3">
                 <div class="form-floating">
@@ -176,9 +193,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row g-4 pt-4">
 
             <!-- Rent Frequency (only for rent) -->
             <div class="col-md-3 d-none rent-field">
@@ -197,6 +211,11 @@
                     <div class="text-danger small">{{ form.contract_duration.errors|striptags }}</div>
                 </div>
             </div>
+        </div>
+
+        <div class="row g-4 pt-4">
+
+
 
             <!-- Bank Installment (only for sale) -->
             <div class="col-md-3 d-none sale-field">
@@ -228,6 +247,8 @@
                     <div class="text-danger small">{{ form.co_brokerage.errors|striptags }}</div>
                 </div>
             </div>
+
+
 
         </div>
 

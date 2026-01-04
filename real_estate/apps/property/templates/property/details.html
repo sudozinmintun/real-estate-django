@@ -192,6 +192,16 @@
                 {% endif %}
             </div>
 
+            <!-- Year Built -->
+            {% if property.yearbuilt %}
+            <div class="col-6 col-md-3 d-flex align-items-center">
+                <i class="bi bi-calendar3 text-primary me-2 fs-5"></i>
+                <span class="text-muted me-2">Year Built:</span>
+                <span class="badge bg-success">
+                    {{ property.yearbuilt }}
+                </span>
+            </div>
+            {% endif %}
         </div>
 
         <hr>
@@ -211,6 +221,13 @@
         {% if property.video_link %}
         <a href="{{ property.video_link }}" class="mb-0 small pt-1" target="_blank">
             {{ property.video_link }}
+        </a>
+        {% endif %}
+
+        {% if property.maplink %}
+        <br>
+        <a href="{{ property.maplink }}" class="mb-0 small pt-1" target="_blank">
+            {{ property.maplink }}
         </a>
         {% endif %}
 

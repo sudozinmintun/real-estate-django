@@ -91,6 +91,9 @@ class Property(models.Model):
         blank=True,
     )
 
+    yearbuilt = models.CharField(max_length=255, null=True, blank=True)
+    maplink = models.URLField(max_length=255, null=True, blank=True)
+    
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
