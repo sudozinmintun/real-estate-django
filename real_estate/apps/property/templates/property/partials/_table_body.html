@@ -1,8 +1,15 @@
 {% for property in properties %}
 <tr id="property-{{ property.id }}" class="property-table">
-    <td title="Title">
-        {{ property.title|truncatechars:25 }}
+    <td>
+        <div title="Title">
+            {{ property.title|truncatechars:25 }}
+        </div>
+        <div class="small text-muted mt-1">
+            <i class="bi bi-hash" title="Property ID"></i>
+            {{ property.property_id }}
+        </div>
     </td>
+
     <td>
         <div title="Property Status">
             {{ property.property_status }}

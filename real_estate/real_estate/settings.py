@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "apps.owners",
     "apps.buyers",
     "apps.lawyers",
+    "apps.paymentplans",
     "apps.country",
     "apps.city",
     "apps.package",

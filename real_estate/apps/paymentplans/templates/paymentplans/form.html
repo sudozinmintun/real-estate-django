@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block title %}Payment Plan Form{% endblock %}
+
+{% block contents %}
+<div class="drive-header">
+    Payment Plan Form
+</div>
+
+<div class="container p-0">
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- PLAN FIELDS -->
+        <div class="card mb-3">
+            <div class="card-body row g-3">
+                {{ form.non_field_errors }}
+
+                {% for field in form %}
+                <div class="col-md-6">
+                    <label class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                    <div class="text-danger small">{{ field.errors }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <h5 class="mt-3">Steps</h5>
+
+        {{ formset.management_form }}
+
+        <!-- EXISTING FORMS -->
+        <div id="formset-container">
+            {% for f in formset %}
+            <div class="card mb-2 formset-item">
+                <div class="card-body row g-3">
+
+                    {% for field in f.visible_fields %}
+                    <div class="col-md-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-outline-danger remove-form">
+                            Remove
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- EMPTY TEMPLATE -->
+        <template id="empty-form-template">
+            <div class="card mb-2 formset-item">
+                <div class="card-body row g-3">
+
+                    {% for field in formset.empty_form.visible_fields %}
+                    <div class="col-md-3">
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="button" class="btn btn-outline-danger remove-form">
+                            Remove
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </template>
+
+        <button type="button" id="add-form" class="btn btn-secondary mt-2">
+            Add Step
+        </button>
+
+        <button class="btn btn-primary mt-2">
+            Save
+        </button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const addBtn = document.getElementById("add-form");
+        const formContainer = document.getElementById("formset-container");
+        const template = document.getElementById("empty-form-template");
+
+        // Find TOTAL_FORMS reliably
+        const totalForms = document.querySelector(
+            "input[name$='-TOTAL_FORMS']"
+        );
+
+        if (!totalForms) {
+            console.error("TOTAL_FORMS not found — formset JS cannot work.");
+            return;
+        }
+
+        addBtn.addEventListener("click", function () {
+            let formIndex = totalForms.value;
+
+            let clone = template.content.cloneNode(true);
+
+            clone.querySelectorAll("[name]").forEach(el => {
+                el.name = el.name.replace("__prefix__", formIndex);
+            });
+
+            clone.querySelectorAll("[id]").forEach(el => {
+                el.id = el.id.replace("__prefix__", formIndex);
+            });
+
+            formContainer.appendChild(clone);
+
+            totalForms.value = parseInt(formIndex) + 1;
+        });
+
+        formContainer.addEventListener("click", function (e) {
+            if (e.target.classList.contains("remove-form")) {
+                e.target.closest(".formset-item").remove();
+
+                // Recount forms so Django stays in sync
+                const count = document.querySelectorAll(".formset-item").length;
+                totalForms.value = count;
+            }
+        });
+
+    });
+</script>
+
+{% endblock %}

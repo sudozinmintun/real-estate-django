@@ -36,13 +36,13 @@
             Lawyers
         </a>
 
-        <!-- 
-        <a class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
-            href="{% url 'owners:index' %}" hx-get="{% url 'owners:index' %}" hx-target="#content" hx-push-url="true">
+        <a class="nav-item {% if request.resolver_match.view_name == 'paymentplans:index' %}active{% endif %}"
+            href="{% url 'paymentplans:index' %}" hx-get="{% url 'paymentplans:index' %}" hx-target="#content" hx-push-url="true">
             <i class="material-icons-outlined">payments</i>
             Payment Plans
         </a>
 
+        <!-- 
         <a class="nav-item {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
             href="{% url 'owners:index' %}" hx-get="{% url 'owners:index' %}" hx-target="#content" hx-push-url="true">
             <i class="material-icons-outlined">description</i>

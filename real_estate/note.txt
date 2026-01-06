@@ -17,14 +17,28 @@ new project
 ==========
 Feature
 - property lists 
-- Payment system 
+- Payment plan 
     [
         Down payment - 20 %
         6 Months Installment - 30%
         Bank Loan - 50%
     ]
+
+    [
+        Down payment - 50 %
+        6 Months Installment - 50%
+    ]
+
+    [
+        Down payment - 100 %
+    ]
+
 - Lowyer
 - contract
 - bank system 
 - Client (Buyer lists)
 - can share feature 2 days or 7 days or no limit
+
+
+Sub Agent
+Complaint
